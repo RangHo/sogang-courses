@@ -1,9 +1,4 @@
-#!/usr/bin/env python3
-"""
-Testbench and constraint generator for Libertron FPGA Starter Kit III.
-"""
-
-
+import os
 from itertools import product
 
 
@@ -75,8 +70,12 @@ fpga_output_pins = {
 }
 
 
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
 def analyze_pins(module_name):
-    """ Analyze and populate the list of input and output pins. """
+
     input_list = []
     output_list = []
     
@@ -105,6 +104,47 @@ def generate_constraints(module_name):
 
     input_list, output_list = result
 
+    # Selection menu helper
+    def select_fpga_pin(fpga_pin_dict, verilog_pin):
+        # Create a pseudo-static property to save pins that are already chosen
+        if not hasattr(select_fpga_pin, 'selected_pins'):
+            select_fpga_pin.selected_pins = {}
+
+        choice = [fpga_pin_dict]
+        while isinstance(choice[-1], dict):
+            # Clear the screen before showing the menu
+            clear_screen()
+            
+            print("Choose package pin to link with Verilog pin [{}].".format(verilog_pin))  
+            for key in choice[-1]:
+                if key in select_fpga_pin.selected_pins:
+                    print(" - {:16} => {}".format(key, select_fpga_pin.selected_pins[key]))
+                else:
+                    print(" - {}".format(key))
+
+            print("Type `prev` to view the previous menu.")
+            raw_choice = input(">>> ")
+
+            if raw_choice == "prev" and len(choice) > 1:
+                choice.pop()
+                continue
+
+            if raw_choice not in choice[-1]:
+                continue
+            
+            choice.append(choice[-1][raw_choice])
+
+        # If the pin is already selected, ask again
+        if raw_choice in select_fpga_pin.selected_pins:
+            print("It seems this pin was already selected before!")
+            print("Are you sure you want to select this pin again?")
+            if input("(y/N) ").lower() != 'y':
+                return select_fpga_pin(fpga_pin_dict, verilog_pin)
+
+        # Mark the package pin as selected
+        select_fpga_pin.selected_pins[raw_choice] = verilog_pin
+        return choice[-1]
+
     with open(module_name + "_constraints.xdc", "w") as f:
         # Set IO standards for all pins
         for pin in input_list + output_list:
@@ -113,43 +153,18 @@ def generate_constraints(module_name):
             )
 
         # Link input pins
-        for pin in input_list:
-            print("--------------------------------")
-            print("Choose package pin to link with input {}.".format(pin))
-
-            choice = fpga_input_pins
-            while isinstance(choice, dict):
-                for key in choice:
-                    print(" - " + key)
-                raw_choice = input(">>> ")
-
-                if raw_choice not in choice:
-                    continue
-
-                choice = choice[raw_choice]
-
-            print("Linking Verilog pin {} with package pin {}...".format(pin, choice))
-
-            f.write("set_property PACKAGE_PIN {} [get_ports {}]\n".format(choice, pin))
+        for verilog_pin in input_list:
+            choice = select_fpga_pin(fpga_input_pins, verilog_pin)
+            print("Linking Verilog pin {} with package pin {}...".format(verilog_pin, choice))
+            f.write("set_property PACKAGE_PIN {} [get_ports {}]\n".format(choice, verilog_pin))
 
         # Link output pins
-        for pin in output_list:
-            print("Choose package pin to link with output {}.".format(pin))
+        for verilog_pin in output_list:
+            choice = select_fpga_pin(fpga_output_pins, verilog_pin)
+            print("Linking Verilog pin {} with package pin {}...".format(verilog_pin, choice))
+            f.write("set_property PACKAGE_PIN {} [get_ports {}]\n".format(choice, verilog_pin))
 
-            choice = fpga_output_pins
-            while isinstance(choice, dict):
-                for key in choice:
-                    print(" - " + key)
-                raw_choice = input(">>> ")
-
-                if raw_choice not in choice:
-                    continue
-
-                choice = choice[raw_choice]
-
-            print("Linking Verilog pin {} with package pin {}...".format(pin, choice))
-
-            f.write("set_property PACKAGE_PIN {} [get_ports {}]\n".format(choice, pin))
+        del select_fpga_pin.selected_pins
 
 
 def generate_testbench(module_name):
@@ -236,5 +251,5 @@ def main():
 if __name__ == "__main__":
     while True:
         main()
-        if input("Create more? (Y/N): ").lower() == "n":
+        if input("Create more? (Y/n): ").lower() == "n":
             break
