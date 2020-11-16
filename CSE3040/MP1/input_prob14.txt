@@ -1,0 +1,10 @@
+apple 3.99
+watermelon 11.99
+strawberries 4.99
+pear 6.99
+mango 8.99
+bananas 1.99
+pineapples 7.99
+kiwi 5.99
+raspberries 2.99
+peaches 10.99
