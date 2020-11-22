@@ -78,7 +78,7 @@ def analyze_pins(module_name):
 
     input_list = []
     output_list = []
-    
+
     try:
         with open(module_name + ".v", 'r') as f:
             for line in f:
@@ -114,8 +114,8 @@ def generate_constraints(module_name):
         while isinstance(choice[-1], dict):
             # Clear the screen before showing the menu
             clear_screen()
-            
-            print("Choose package pin to link with Verilog pin [{}].".format(verilog_pin))  
+
+            print("Choose package pin to link with Verilog pin [{}].".format(verilog_pin))
             for key in choice[-1]:
                 if key in select_fpga_pin.selected_pins:
                     print(" - {:16} => {}".format(key, select_fpga_pin.selected_pins[key]))
@@ -131,7 +131,7 @@ def generate_constraints(module_name):
 
             if raw_choice not in choice[-1]:
                 continue
-            
+
             choice.append(choice[-1][raw_choice])
 
         # If the pin is already selected, ask again
@@ -169,7 +169,7 @@ def generate_constraints(module_name):
 
 def generate_testbench(module_name):
     """ Generate testbench from a file. """
-    
+
     result = analyze_pins(module_name)
 
     if not result:
@@ -228,7 +228,7 @@ def generate_testbench(module_name):
 
 
 def main():
-    module_name = input("Name of the module? ")
+    module_name = input("Enter the name of module to analyze: ")
 
     print("Choose one option from below.")
     print(" 1. Generate testbench")
@@ -237,15 +237,15 @@ def main():
 
     mode = int(input(">>> "))
 
-    if mode == 1:
+    if mode == 0 or mode == 1:
         generate_testbench(module_name)
-    elif mode == 2:
+        return 0
+
+    if mode == 0 or mode == 2:
         generate_constraints(module_name)
-    elif mode == 0:
-        generate_testbench(module_name)
-        generate_constraints(module_name)
-    else:
-        print("Invalid option was supplied.")
+        return 0
+
+    print("Invalid option was supplied.")
 
 
 if __name__ == "__main__":
