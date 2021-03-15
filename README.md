@@ -1,3 +1,21 @@
-# Sogang Courses
+<h1 align="center"><img src="https://user-images.githubusercontent.com/10833976/111170707-92b1d680-85e7-11eb-8e58-1eac6ef8998b.png" /></h1>
 
-Repository for Sogang University Course Materials (basically pretty much all of my homeworks)
+### 이곳은 서강대학교에서 들은 수업의 과제 및 시험 등을 공유하는 리포지토리입니다.
+
+혹시 틀리거나 만점을 받지 못 할 만한 답안이 있다면 부담없이 [이슈](https://github.com/RangHo/sogang-courses/issues/new/choose) 또는 [풀 리퀘스트](https://github.com/RangHo/sogang-courses/compare)를 작성해 주세요. 강의자료 및 과제/족보 기부는 언제든지 환영입니다! 기부는 풀 리퀘스트를 작성하거나 제 이메일 [hello@rangho.me](mailto:hello@rangho.me)로 보내 주시면 검토 및 작업 후 추가하도록 할게요.
+
+## ✨ 완성된 과목 목록
+| 과목코드 | 과목명 | 학기 | 내용 |
+|---|---|---|---|
+| `CSE3016` | [컴퓨터공학실험II](CSE3016) | 2020-02 | 실습 |
+| `CSE3040` | [JAVA언어](CSE3040) | 2020-02 | 과제 |
+
+## 🏗️ 작업중인 과목 목록
+| 과목코드 | 과목명 | 학기 | 현재까지 작성된 내용 |
+|---|---|---|---|
+
+> 아직 작업중인 과목이 없습니다!
+
+## ☕ 주인장 후원하기
+이 리포지토리가 도움이 됐다면 리포지토리 주인이 더 ~~밤늦게까지~~ 열심히 작업할 수 있게 커피 한 잔 기부해 주세요! 페이지 오른편에 커피 한 잔 쏴 줄 수 있는 링크가 두 개 있답니다
+♪
