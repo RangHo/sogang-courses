@@ -1,4 +1,4 @@
-`timesclae 1ns / 1ps;
+`timescale 1ns / 1ps
 
 module eight_to_one_mux(S0, S1, S2, I0, I1, I2, I3, I4, I5, I6, I7, O);
     input S0, S1, S2;
