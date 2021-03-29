@@ -1,0 +1,202 @@
+\documentclass{homework}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{kotex}
+\usepackage{environ}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{braket}
+
+\usepackage{graphicx}
+
+\usepackage{tikz}
+
+\usepackage{karnaugh-map}
+
+\newcommand{\hwname}{이주헌}
+\newcommand{\hwemail}{20191629}
+\newcommand{\hwnum}{2}
+
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwclass}{CSE3015}
+
+\begin{document}
+
+\maketitle
+
+\question*{Let $F(A, B, C, D) = BD + B'D'$ is given.}
+
+\begin{itemize}
+\item Make given function to canonical SOP form.
+
+The truth table for the function $F$ is:
+
+\begin{tabular}{cccc|c|c}
+$A$ & $B$ & $C$ & $D$ & $F$ & Minterm \\
+\hline
+T & T & T & T & T & $m_{15}$ \\
+T & T & T & F & F & $m_{14}$ \\
+T & T & F & T & T & $m_{13}$ \\
+T & T & F & F & F & $m_{12}$ \\
+T & F & T & T & F & $m_{11}$ \\
+T & F & T & F & T & $m_{10}$ \\
+T & F & F & T & F & $m_9$ \\
+T & F & F & F & T & $m_8$ \\
+F & T & T & T & T & $m_7$ \\
+F & T & T & F & F & $m_6$ \\
+F & T & F & T & T & $m_5$ \\
+F & T & F & F & F & $m_4$ \\
+F & F & T & T & F & $m_3$ \\
+F & F & T & F & T & $m_2$ \\
+F & F & F & T & F & $m_1$ \\
+F & F & F & F & T & $m_0$ \\
+\end{tabular}
+
+From the truth table above, the 1-minterm indices are $\{0, 2, 5, 7, 8, 10, 13, 15\}$. Hence, the canonical SOP form can be written as:
+
+$$
+F_1(A, B, C, D) = \sum{(0, 2, 5, 7, 8, 10, 13, 15)}
+= m_0 + m_2 + m_5 + m_7 + m_8 + m_{10} + m_{13} + m_{15}
+$$
+
+\item{With canonical SOP form, fill up the Karnaugh Map.}
+
+\begin{center}
+\begin{karnaugh-map}[4][4][1][$AB$][$CD$]
+\minterms{0, 2, 5, 7, 8, 10, 13, 15}
+\end{karnaugh-map}
+\end{center}
+
+\item{Using the Karnaugh Map, find the simplest(shortest) SOP form. Show each step and detail.}
+
+The Karnaugh Map given by the previous step looks like this:
+
+\begin{center}
+\begin{karnaugh-map}[4][4][1][$AB$][$CD$]
+\minterms{0, 2, 5, 7, 8, 10, 13, 15}
+\end{karnaugh-map}
+\end{center}
+
+Here, it is pretty obvious that we can group the four 1's in the middle into an implicant group as follows:
+
+\begin{center}
+\begin{karnaugh-map}[4][4][1][$AB$][$CD$]
+\minterms{0, 2, 5, 7, 8, 10, 13, 15}
+\implicant{5}{15}
+\end{karnaugh-map}
+\end{center}
+
+Considering that Karnaugh Map can ``wrap around'' in all four directions, we can connect the four corner cells into an implicant group as well:
+
+\begin{center}
+\begin{karnaugh-map}[4][4][1][$AB$][$CD$]
+\minterms{0, 2, 5, 7, 8, 10, 13, 15}
+\implicant{5}{15}
+\implicantcorner
+\end{karnaugh-map}
+\end{center}
+
+Since all two implicants are not included in any other implicants, and include minterms that are not included in any other prime implicants, we can say they all are \textbf{essential prime implicants}. 
+
+The red implicant represents $BD$, and the green implicant represents $B'D'$. Therefore, connecting these two implicants with logical OR gives the following shortest SOP form:
+$$
+F(A, B, C, D) = BD + B'D'
+$$
+\end{itemize}
+
+\question*{Let $G(A, B, C, D) = (A + C)(B' + C' + D')(B + C' + D)$ is given.}
+
+\begin{itemize}
+\item Make given function to canonical POS form.
+
+The truth table for the function $G$ is:
+
+\begin{tabular}{cccc|c|c}
+$A$ & $B$ & $C$ & $D$ & $G$ & Maxterm \\
+\hline
+T & T & T & T & F & $M_{15}$ \\
+T & T & T & F & T & $M_{14}$ \\
+T & T & F & T & T & $M_{13}$ \\
+T & T & F & F & T & $M_{12}$ \\
+
+T & F & T & T & T & $M_{11}$ \\
+T & F & T & F & F & $M_{10}$ \\
+T & F & F & T & T & $M_9$ \\
+T & F & F & F & T & $M_8$ \\
+
+F & T & T & T & F & $M_7$ \\
+F & T & T & F & T & $M_6$ \\
+F & T & F & T & F & $M_5$ \\
+F & T & F & F & F & $M_4$ \\
+
+F & F & T & T & T & $M_3$ \\
+F & F & T & F & F & $M_2$ \\
+F & F & F & T & F & $M_1$ \\
+F & F & F & F & F & $M_0$ \\
+\end{tabular}
+
+From the truth table above, the 0-maxterm indices are $\{0, 1, 2, 4, 5, 7, 10, 15\}$. Hence, the canonical POS form can be written as:
+
+$$
+G_1(A, B, C, D) = \prod{(0, 1, 2, 4, 5, 7, 10, 15)}
+= M_0M_1M_2M_4M_5M_7M_{10}M_{15}
+$$
+
+\item{With canonical POS form, fill up the Karnaugh Map.}
+
+\begin{center}
+\begin{karnaugh-map}[4][4][1][$CD$][$AB$]
+\maxterms{0, 1, 2, 4, 5, 7, 10, 15}
+\end{karnaugh-map}
+\end{center}
+
+\item{Using the Karnaugh Map, find the simplest(shortest) SOP form. Show each step and detail.}
+
+The Karnaugh Map given by the previous step looks like this:
+
+\begin{center}
+\begin{karnaugh-map}[4][4][1][$CD$][$AB$]
+\maxterms{0, 1, 2, 4, 5, 7, 10, 15}
+\end{karnaugh-map}
+\end{center}
+
+The upper-left corner has four 0-maxterms arranged like a square, so we can put them in an implicant group.
+
+\begin{center}
+\begin{karnaugh-map}[4][4][1][$CD$][$AB$]
+\maxterms{0, 1, 2, 4, 5, 7, 10, 15}
+\implicant{0}{5}
+\end{karnaugh-map}
+\end{center}
+
+On the third column, there are two maxterms in a line. They can put into an implicant group as well.
+
+\begin{center}
+\begin{karnaugh-map}[4][4][1][$CD$][$AB$]
+\maxterms{0, 1, 2, 4, 5, 7, 10, 15}
+\implicant{0}{5}
+\implicant{7}{15}
+\end{karnaugh-map}
+\end{center}
+
+Again, considering that Karnaugh Map can ``wrap around'' in all four directions, we can put two in the last column into their own implicant group.
+
+\begin{center}
+\begin{karnaugh-map}[4][4][1][$CD$][$AB$]
+\maxterms{0, 1, 2, 4, 5, 7, 10, 15}
+\implicant{0}{5}
+\implicant{7}{15}
+\implicantedge{2}{2}{10}{10}
+\end{karnaugh-map}
+\end{center}
+
+Since all two implicants are not included in any other implicants, and include maxterms that are not included in any other prime implicants, we can say they all are \textbf{essential prime implicants}. 
+
+For the red implicant, we find terms $A'$ and $C'$. Taking their complement and connecting them with logical OR, we find the red implicant represents $A + C$. For the green implicant, we find terms $B$, $C$, and $D$. Following the same procedure, we find the green implicant represents $B' + C' + D'$. Similarly, the yellow implicant represents $B + C' + D$. Connecting all terms with logical AND, we get the shortest POS form:
+$$
+G(A, B, C, D) = (A + C)(B' + C' + D')(B + C' + D)
+$$
+\end{itemize}
+
+\end{document}
