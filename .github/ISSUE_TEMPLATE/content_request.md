@@ -2,7 +2,7 @@
 name: 내용 추가 요청
 about: 원하는 내용을 추가하고 싶을 때
 title: '내용 추가: (과목명)'
-labels: ''
+labels: ":bulb: 개선사항"
 assignees: ''
 
 ---

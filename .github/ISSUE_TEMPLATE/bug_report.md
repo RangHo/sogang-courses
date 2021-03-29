@@ -2,7 +2,7 @@
 name: 버그 리포트
 about: 코드에 문제가 있거나 잘 작동하지 않을 때
 title: "[과목코드] 이슈 제목"
-labels: ''
+labels: ":bug: 버그"
 assignees: ''
 
 ---
