@@ -1,1 +1,0 @@
-Gura chan kawaii
