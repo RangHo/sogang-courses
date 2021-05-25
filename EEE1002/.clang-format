@@ -1,0 +1,7 @@
+BasedOnStyle: WebKit
+AlignTrailingComments: 'true'
+ColumnLimit: '100'
+ReflowComments: 'true'
+SortIncludes: 'true'
+SortUsingDeclarations: 'true'
+UseTab: Never
