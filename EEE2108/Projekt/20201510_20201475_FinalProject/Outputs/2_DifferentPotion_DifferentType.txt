@@ -1,0 +1,265 @@
+Pokemon Battle Start!
+
+
+Ponyta attacked Politoed!
+It was not very effective...
+Ponyta dealt 5.0 damage to Politoed.
+Enemy Health: 85.0
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Enemy Health: 20.0
+
+Fire2 used a potion!
+Ponyta healed to max health!
+Current health: 50
+Fire2 has 2 potions left.
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Enemy Health: 20.0
+
+Fire2 used a potion!
+Ponyta healed to max health!
+Current health: 50
+Fire2 has 1 potions left.
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Enemy Health: 20.0
+
+Fire2 used a potion!
+Ponyta healed to max health!
+Current health: 50
+Fire2 has 0 potions left.
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Enemy Health: 20.0
+
+Ponyta attacked Politoed!
+It was not very effective...
+Ponyta dealt 5.0 damage to Politoed.
+Enemy Health: 80.0
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Ponyta is knocked out!
+Enemy Health: 0
+
+Fire2 changed their pokemon to Rapidash!
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 57.5
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 67.5
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 50.0
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 55.0
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 42.5
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 42.5
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 35.0
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 30.0
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 27.5
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 17.5
+
+Water2 used a potion!
+Politoed healed to max health!
+Current health: 90
+Water2 has 0 potions left.
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 77.5
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 20.0
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 65.0
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 12.5
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 52.5
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 5.0
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 40.0
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Rapidash is knocked out!
+Enemy Health: 0
+
+Fire2 changed their pokemon to Flareon!
+Politoed attacked Flareon!
+It was very effective!
+Politoed dealt 22.5 damage to Flareon.
+Enemy Health: 42.5
+
+Flareon attacked Politoed!
+It was not very effective...
+Flareon dealt 27.5 damage to Politoed.
+Enemy Health: 12.5
+
+Politoed attacked Politoed!
+It was not very effective...
+Politoed dealt 0.0 damage to Politoed.
+Enemy Health: 12.5
+
+Flareon attacked Politoed!
+It was not very effective...
+Flareon dealt 27.5 damage to Politoed.
+Politoed is knocked out!
+Enemy Health: 0
+
+Water2 changed their pokemon to Feebas!
+Flareon attacked Feebas!
+It was not very effective...
+Flareon dealt 55.0 damage to Feebas.
+Feebas is knocked out!
+Enemy Health: 0
+
+Water2 changed their pokemon to Milotic!
+Flareon attacked Milotic!
+It was not very effective...
+Flareon dealt 25.5 damage to Milotic.
+Enemy Health: 69.5
+
+Milotic attacked Flareon!
+It was very effective!
+Milotic dealt 0.0 damage to Flareon.
+Enemy Health: 42.5
+
+Flareon attacked Milotic!
+It was not very effective...
+Flareon dealt 25.5 damage to Milotic.
+Enemy Health: 44.0
+
+Milotic attacked Flareon!
+It was very effective!
+Milotic dealt 0.0 damage to Flareon.
+Enemy Health: 42.5
+
+Flareon attacked Milotic!
+It was not very effective...
+Flareon dealt 25.5 damage to Milotic.
+Enemy Health: 18.5
+
+Milotic attacked Milotic!
+It was not very effective...
+Milotic dealt 9.5 damage to Milotic.
+Enemy Health: 9.0
+
+Flareon attacked Milotic!
+It was not very effective...
+Flareon dealt 25.5 damage to Milotic.
+Milotic is knocked out!
+Enemy Health: 0
+
+Water2 changed their pokemon to Gorebyss!
+Flareon attacked Gorebyss!
+It was not very effective...
+Flareon dealt 12.5 damage to Gorebyss.
+Enemy Health: 42.5
+
+Gorebyss attacked Flareon!
+It was very effective!
+Gorebyss dealt 36.0 damage to Flareon.
+Enemy Health: 6.5
+
+Flareon attacked Gorebyss!
+It was not very effective...
+Flareon dealt 12.5 damage to Gorebyss.
+Enemy Health: 30.0
+
+Gorebyss attacked Flareon!
+It was very effective!
+Gorebyss dealt 36.0 damage to Flareon.
+Flareon is knocked out!
+Enemy Health: 0
+
+Fire2 changed their pokemon to Typhlosion!
+Gorebyss attacked Typhlosion!
+It was very effective!
+Gorebyss dealt 9.0 damage to Typhlosion.
+Enemy Health: 69.0
+
+Typhlosion attacked Gorebyss!
+It was not very effective...
+Typhlosion dealt 10.5 damage to Gorebyss.
+Enemy Health: 19.5
+
+Gorebyss attacked Gorebyss!
+It was not very effective...
+Gorebyss dealt 10.5 damage to Gorebyss.
+Enemy Health: 9.0
+
+Typhlosion attacked Gorebyss!
+It was not very effective...
+Typhlosion dealt 10.5 damage to Gorebyss.
+Gorebyss is knocked out!
+Enemy Health: 0
+
+All of Water2's pokemon fainted!
+
+Battle End!
+Fire2 Wins!

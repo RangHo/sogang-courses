@@ -1,0 +1,202 @@
+Pokemon Battle Start!
+
+
+Ponyta attacked Slugma!
+It was not very effective...
+Ponyta dealt 22.5 damage to Slugma.
+Enemy Health: 17.5
+
+Fire1 used a potion!
+Slugma healed to max health!
+Current health: 40
+Fire1 has 2 potions left.
+
+Ponyta attacked Slugma!
+It was not very effective...
+Ponyta dealt 22.5 damage to Slugma.
+Enemy Health: 17.5
+
+Fire1 used a potion!
+Slugma healed to max health!
+Current health: 40
+Fire1 has 1 potions left.
+
+Ponyta attacked Slugma!
+It was not very effective...
+Ponyta dealt 22.5 damage to Slugma.
+Enemy Health: 17.5
+
+Fire1 used a potion!
+Slugma healed to max health!
+Current health: 40
+Fire1 has 0 potions left.
+
+Ponyta attacked Slugma!
+It was not very effective...
+Ponyta dealt 22.5 damage to Slugma.
+Enemy Health: 17.5
+
+Slugma attacked Slugma!
+It was not very effective...
+Slugma dealt 0.0 damage to Slugma.
+Enemy Health: 17.5
+
+Ponyta attacked Slugma!
+It was not very effective...
+Ponyta dealt 22.5 damage to Slugma.
+Slugma is knocked out!
+Enemy Health: 0
+
+Fire1 changed their pokemon to Magby!
+Ponyta attacked Magby!
+It was not very effective...
+Ponyta dealt 24.0 damage to Magby.
+Enemy Health: 21.0
+
+Magby attacked Ponyta!
+It was not very effective...
+Magby dealt 10.0 damage to Ponyta.
+Enemy Health: 40.0
+
+Ponyta attacked Magby!
+It was not very effective...
+Ponyta dealt 24.0 damage to Magby.
+Magby is knocked out!
+Enemy Health: 0
+
+Fire1 changed their pokemon to Magmortar!
+Ponyta attacked Magmortar!
+It was not very effective...
+Ponyta dealt 9.0 damage to Magmortar.
+Enemy Health: 66.0
+
+Magmortar attacked Ponyta!
+It was not very effective...
+Magmortar dealt 20.0 damage to Ponyta.
+Enemy Health: 20.0
+
+Fire2 used a potion!
+Ponyta healed to max health!
+Current health: 50
+Fire2 has 2 potions left.
+
+Magmortar attacked Ponyta!
+It was not very effective...
+Magmortar dealt 20.0 damage to Ponyta.
+Enemy Health: 30.0
+
+Ponyta attacked Magmortar!
+It was not very effective...
+Ponyta dealt 9.0 damage to Magmortar.
+Enemy Health: 57.0
+
+Magmortar attacked Ponyta!
+It was not very effective...
+Magmortar dealt 20.0 damage to Ponyta.
+Enemy Health: 10.0
+
+Fire2 used a potion!
+Ponyta healed to max health!
+Current health: 50
+Fire2 has 1 potions left.
+
+Magmortar attacked Ponyta!
+It was not very effective...
+Magmortar dealt 20.0 damage to Ponyta.
+Enemy Health: 30.0
+
+Ponyta attacked Magmortar!
+It was not very effective...
+Ponyta dealt 9.0 damage to Magmortar.
+Enemy Health: 48.0
+
+Magmortar attacked Ponyta!
+It was not very effective...
+Magmortar dealt 20.0 damage to Ponyta.
+Enemy Health: 10.0
+
+Fire2 used a potion!
+Ponyta healed to max health!
+Current health: 50
+Fire2 has 0 potions left.
+
+Magmortar attacked Ponyta!
+It was not very effective...
+Magmortar dealt 20.0 damage to Ponyta.
+Enemy Health: 30.0
+
+Ponyta attacked Magmortar!
+It was not very effective...
+Ponyta dealt 9.0 damage to Magmortar.
+Enemy Health: 39.0
+
+Magmortar attacked Ponyta!
+It was not very effective...
+Magmortar dealt 20.0 damage to Ponyta.
+Enemy Health: 10.0
+
+Ponyta attacked Magmortar!
+It was not very effective...
+Ponyta dealt 9.0 damage to Magmortar.
+Enemy Health: 30.0
+
+Magmortar attacked Ponyta!
+It was not very effective...
+Magmortar dealt 20.0 damage to Ponyta.
+Ponyta is knocked out!
+Enemy Health: 0
+
+Fire2 changed their pokemon to Rapidash!
+Magmortar attacked Rapidash!
+It was not very effective...
+Magmortar dealt 12.5 damage to Rapidash.
+Enemy Health: 52.5
+
+Rapidash attacked Magmortar!
+It was not very effective...
+Rapidash dealt 16.5 damage to Magmortar.
+Enemy Health: 13.5
+
+Magmortar attacked Magmortar!
+It was not very effective...
+Magmortar dealt 14.0 damage to Magmortar.
+Magmortar is knocked out!
+Enemy Health: 0
+
+Rapidash attacked Magmortar!
+It was not very effective...
+Rapidash dealt 16.5 damage to Magmortar.
+Magmortar is already knocked out.
+Enemy Health: 0
+
+Fire1 changed their pokemon to Tepig!
+Rapidash attacked Tepig!
+It was not very effective...
+Rapidash dealt 27.5 damage to Tepig.
+Enemy Health: 37.5
+
+Tepig attacked Rapidash!
+It was not very effective...
+Tepig dealt 3.5 damage to Rapidash.
+Enemy Health: 49.0
+
+Rapidash attacked Tepig!
+It was not very effective...
+Rapidash dealt 27.5 damage to Tepig.
+Enemy Health: 10.0
+
+Tepig attacked Tepig!
+It was not very effective...
+Tepig dealt 9.0 damage to Tepig.
+Enemy Health: 1.0
+
+Rapidash attacked Tepig!
+It was not very effective...
+Rapidash dealt 27.5 damage to Tepig.
+Tepig is knocked out!
+Enemy Health: 0
+
+All of Fire1's pokemon fainted!
+
+Battle End!
+Fire2 Wins!
