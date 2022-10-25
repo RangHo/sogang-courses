@@ -1,0 +1,663 @@
+Pokemon Battle Start!
+
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 70.5
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 58.5
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 51.0
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 39.0
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 31.5
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 19.5
+
+Jun used a potion!
+Charmeleon healed to max health!
+Current health: 78
+Jun has 2 potions left.
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 58.5
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 12.0
+
+Subaru used a potion!
+Slowpoke healed to max health!
+Current health: 90
+Subaru has 2 potions left.
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 70.5
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 39.0
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 51.0
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 19.5
+
+Jun used a potion!
+Charmeleon healed to max health!
+Current health: 78
+Jun has 1 potions left.
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 58.5
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 31.5
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 39.0
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 12.0
+
+Subaru used a potion!
+Slowpoke healed to max health!
+Current health: 90
+Subaru has 1 potions left.
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 70.5
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 19.5
+
+Jun used a potion!
+Charmeleon healed to max health!
+Current health: 78
+Jun has 0 potions left.
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 58.5
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 51.0
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 39.0
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 31.5
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Enemy Health: 19.5
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 12.0
+
+Subaru used a potion!
+Slowpoke healed to max health!
+Current health: 90
+Subaru has 0 potions left.
+
+Charmeleon attacked Slowpoke!
+It was not very effective...
+Charmeleon dealt 19.5 damage to Slowpoke.
+Enemy Health: 70.5
+
+Slowpoke attacked Charmeleon!
+It was very effective!
+Slowpoke dealt 19.5 damage to Charmeleon.
+Charmeleon is knocked out!
+Enemy Health: 0
+
+Jun changed their pokemon to Blastoise!
+Slowpoke attacked Blastoise!
+It was not very effective...
+Slowpoke dealt 17.5 damage to Blastoise.
+Enemy Health: 61.5
+
+Blastoise attacked Slowpoke!
+It was not very effective...
+Blastoise dealt 9.0 damage to Slowpoke.
+Enemy Health: 61.5
+
+Slowpoke attacked Blastoise!
+It was not very effective...
+Slowpoke dealt 17.5 damage to Blastoise.
+Enemy Health: 44.0
+
+Blastoise attacked Slowpoke!
+It was not very effective...
+Blastoise dealt 9.0 damage to Slowpoke.
+Enemy Health: 52.5
+
+Slowpoke attacked Blastoise!
+It was not very effective...
+Slowpoke dealt 17.5 damage to Blastoise.
+Enemy Health: 26.5
+
+Blastoise attacked Slowpoke!
+It was not very effective...
+Blastoise dealt 9.0 damage to Slowpoke.
+Enemy Health: 43.5
+
+Slowpoke attacked Blastoise!
+It was not very effective...
+Slowpoke dealt 17.5 damage to Blastoise.
+Enemy Health: 9.0
+
+Blastoise attacked Slowpoke!
+It was not very effective...
+Blastoise dealt 9.0 damage to Slowpoke.
+Enemy Health: 34.5
+
+Slowpoke attacked Blastoise!
+It was not very effective...
+Slowpoke dealt 17.5 damage to Blastoise.
+Blastoise is knocked out!
+Enemy Health: 0
+
+Jun changed their pokemon to Emboar!
+Slowpoke attacked Emboar!
+It was very effective!
+Slowpoke dealt 0.0 damage to Emboar.
+Enemy Health: 110.0
+
+Emboar attacked Slowpoke!
+It was not very effective...
+Emboar dealt 29.0 damage to Slowpoke.
+Enemy Health: 5.5
+
+Slowpoke attacked Slowpoke!
+It was not very effective...
+Slowpoke dealt 0.0 damage to Slowpoke.
+Enemy Health: 5.5
+
+Emboar attacked Slowpoke!
+It was not very effective...
+Emboar dealt 29.0 damage to Slowpoke.
+Slowpoke is knocked out!
+Enemy Health: 0
+
+Subaru changed their pokemon to Suicune!
+Emboar attacked Suicune!
+It was not very effective...
+Emboar dealt 4.0 damage to Suicune.
+Enemy Health: 96.0
+
+Suicune attacked Emboar!
+It was very effective!
+Suicune dealt 15.0 damage to Emboar.
+Enemy Health: 95.0
+
+Emboar attacked Suicune!
+It was not very effective...
+Emboar dealt 4.0 damage to Suicune.
+Enemy Health: 92.0
+
+Suicune attacked Emboar!
+It was very effective!
+Suicune dealt 15.0 damage to Emboar.
+Enemy Health: 80.0
+
+Emboar attacked Suicune!
+It was not very effective...
+Emboar dealt 4.0 damage to Suicune.
+Enemy Health: 88.0
+
+Suicune attacked Emboar!
+It was very effective!
+Suicune dealt 15.0 damage to Emboar.
+Enemy Health: 65.0
+
+Emboar attacked Suicune!
+It was not very effective...
+Emboar dealt 4.0 damage to Suicune.
+Enemy Health: 84.0
+
+Suicune attacked Emboar!
+It was very effective!
+Suicune dealt 15.0 damage to Emboar.
+Enemy Health: 50.0
+
+Emboar attacked Suicune!
+It was not very effective...
+Emboar dealt 4.0 damage to Suicune.
+Enemy Health: 80.0
+
+Suicune attacked Emboar!
+It was very effective!
+Suicune dealt 15.0 damage to Emboar.
+Enemy Health: 35.0
+
+Emboar attacked Suicune!
+It was not very effective...
+Emboar dealt 4.0 damage to Suicune.
+Enemy Health: 76.0
+
+Suicune attacked Emboar!
+It was very effective!
+Suicune dealt 15.0 damage to Emboar.
+Enemy Health: 20.0
+
+Emboar attacked Suicune!
+It was not very effective...
+Emboar dealt 4.0 damage to Suicune.
+Enemy Health: 72.0
+
+Suicune attacked Emboar!
+It was very effective!
+Suicune dealt 15.0 damage to Emboar.
+Enemy Health: 5.0
+
+Emboar attacked Suicune!
+It was not very effective...
+Emboar dealt 4.0 damage to Suicune.
+Enemy Health: 68.0
+
+Suicune attacked Emboar!
+It was very effective!
+Suicune dealt 15.0 damage to Emboar.
+Emboar is knocked out!
+Enemy Health: 0
+
+Jun changed their pokemon to Delphox!
+Suicune attacked Delphox!
+It was very effective!
+Suicune dealt 4.5 damage to Delphox.
+Enemy Health: 70.5
+
+Delphox attacked Suicune!
+It was not very effective...
+Delphox dealt 23.0 damage to Suicune.
+Enemy Health: 45.0
+
+Suicune attacked Delphox!
+It was very effective!
+Suicune dealt 4.5 damage to Delphox.
+Enemy Health: 66.0
+
+Delphox attacked Suicune!
+It was not very effective...
+Delphox dealt 23.0 damage to Suicune.
+Enemy Health: 22.0
+
+Suicune attacked Delphox!
+It was very effective!
+Suicune dealt 4.5 damage to Delphox.
+Enemy Health: 61.5
+
+Delphox attacked Suicune!
+It was not very effective...
+Delphox dealt 23.0 damage to Suicune.
+Suicune is knocked out!
+Enemy Health: 0
+
+Subaru changed their pokemon to Pyroar!
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 84.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 59.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 83.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 57.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 81.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 55.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 80.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 53.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 78.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 51.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 77.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 49.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 75.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 47.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 74.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 45.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 72.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 43.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 71.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 41.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 69.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 39.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 68.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 37.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 66.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 35.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 65.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 33.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 63.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 31.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 62.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 29.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 60.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 27.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 59.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 25.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 57.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 23.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 56.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 21.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 54.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 19.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 53.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 17.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 51.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 15.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 50.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 13.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 48.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 11.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 47.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 9.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 45.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 7.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 44.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 5.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 42.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 3.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 41.0
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Enemy Health: 1.5
+
+Delphox attacked Pyroar!
+It was not very effective...
+Delphox dealt 1.5 damage to Pyroar.
+Enemy Health: 39.5
+
+Pyroar attacked Delphox!
+It was not very effective...
+Pyroar dealt 2.0 damage to Delphox.
+Delphox is knocked out!
+Enemy Health: 0
+
+All of Jun's pokemon fainted!
+
+Battle End!
+Subaru Wins!

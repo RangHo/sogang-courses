@@ -1,0 +1,379 @@
+Pokemon Battle Start!
+
+
+Ponyta attacked Politoed!
+It was not very effective...
+Ponyta dealt 5.0 damage to Politoed.
+Enemy Health: 85.0
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Enemy Health: 20.0
+
+Fire2 used a potion!
+Ponyta healed to max health!
+Current health: 50
+Fire2 has 2 potions left.
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Enemy Health: 20.0
+
+Fire2 used a potion!
+Ponyta healed to max health!
+Current health: 50
+Fire2 has 1 potions left.
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Enemy Health: 20.0
+
+Fire2 used a potion!
+Ponyta healed to max health!
+Current health: 50
+Fire2 has 0 potions left.
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Enemy Health: 20.0
+
+Ponyta attacked Politoed!
+It was not very effective...
+Ponyta dealt 5.0 damage to Politoed.
+Enemy Health: 80.0
+
+Politoed attacked Ponyta!
+It was very effective!
+Politoed dealt 30.0 damage to Ponyta.
+Ponyta is knocked out!
+Enemy Health: 0
+
+Fire2 changed their pokemon to Rapidash!
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 57.5
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 67.5
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 50.0
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 55.0
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 42.5
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 42.5
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 35.0
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 30.0
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 27.5
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 17.5
+
+Water2 used a potion!
+Politoed healed to max health!
+Current health: 90
+Water2 has 2 potions left.
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 77.5
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 20.0
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 65.0
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 12.5
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 52.5
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Enemy Health: 5.0
+
+Rapidash attacked Politoed!
+It was not very effective...
+Rapidash dealt 12.5 damage to Politoed.
+Enemy Health: 40.0
+
+Politoed attacked Rapidash!
+It was very effective!
+Politoed dealt 7.5 damage to Rapidash.
+Rapidash is knocked out!
+Enemy Health: 0
+
+Fire2 changed their pokemon to Flareon!
+Politoed attacked Flareon!
+It was very effective!
+Politoed dealt 22.5 damage to Flareon.
+Enemy Health: 42.5
+
+Flareon attacked Politoed!
+It was not very effective...
+Flareon dealt 27.5 damage to Politoed.
+Enemy Health: 12.5
+
+Water2 used a potion!
+Politoed healed to max health!
+Current health: 90
+Water2 has 1 potions left.
+
+Flareon attacked Politoed!
+It was not very effective...
+Flareon dealt 27.5 damage to Politoed.
+Enemy Health: 62.5
+
+Politoed attacked Flareon!
+It was very effective!
+Politoed dealt 22.5 damage to Flareon.
+Enemy Health: 20.0
+
+Flareon attacked Politoed!
+It was not very effective...
+Flareon dealt 27.5 damage to Politoed.
+Enemy Health: 35.0
+
+Politoed attacked Flareon!
+It was very effective!
+Politoed dealt 22.5 damage to Flareon.
+Flareon is knocked out!
+Enemy Health: 0
+
+Fire2 changed their pokemon to Typhlosion!
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 73.5
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 30.5
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 69.0
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 26.0
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 64.5
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 21.5
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 60.0
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 17.0
+
+Water2 used a potion!
+Politoed healed to max health!
+Current health: 90
+Water2 has 0 potions left.
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 85.5
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 55.5
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 81.0
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 51.0
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 76.5
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 46.5
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 72.0
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 42.0
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 67.5
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 37.5
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 63.0
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 33.0
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 58.5
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 28.5
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 54.0
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 24.0
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 49.5
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 19.5
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 45.0
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 15.0
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 40.5
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 10.5
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 36.0
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 6.0
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 31.5
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Enemy Health: 1.5
+
+Typhlosion attacked Politoed!
+It was not very effective...
+Typhlosion dealt 4.5 damage to Politoed.
+Enemy Health: 27.0
+
+Politoed attacked Typhlosion!
+It was very effective!
+Politoed dealt 4.5 damage to Typhlosion.
+Typhlosion is knocked out!
+Enemy Health: 0
+
+All of Fire2's pokemon fainted!
+
+Battle End!
+Water2 Wins!
