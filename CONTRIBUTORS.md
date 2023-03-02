@@ -19,5 +19,9 @@
 ### COR1009 - 컴퓨팅사고력(전자공학과 전용)
 - [찬혁](https://github.com/charlielee206)
 
-### EE1002 - C언어기초
+### EEE1002 - C언어기초
 - [찬혁](https://github.com/charlielee206)
+
+### EEE2108 - 공학프로그래밍
+- [찬혁](https://github.com/charlielee206)
+- [RangHo Lee](https://github.com/RangHo)
