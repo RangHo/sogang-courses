@@ -13,6 +13,11 @@ import traceback
 from pathlib import Path
 
 
+# Standard I/O's encoding
+STDOUT_ENCODING = sys.stdout.encoding or sys.getdefaultencoding()
+STDIN_ENCODING = sys.stdin.encoding or sys.getdefaultencoding()
+
+
 def run_without_input(script_path: Path) -> str:
     """Run a file and return its output."""
     print(f"Running file {script_path}...")
@@ -20,7 +25,7 @@ def run_without_input(script_path: Path) -> str:
         ['python', script_path],
         stderr=subprocess.STDOUT
     )
-    return True, output.decode("utf-8")
+    return True, output.decode(STDOUT_ENCODING)
 
 
 def run_with_input(script_path: Path, input_path: Path) -> str:
@@ -32,7 +37,7 @@ def run_with_input(script_path: Path, input_path: Path) -> str:
             stdin=f,
             stderr=subprocess.STDOUT
         )
-    return True, output.decode("utf-8")
+    return True, output.decode(STDOUT_ENCODING)
 
 
 def run(script_path: Path, input_path: Path = None) -> str:
