@@ -13,9 +13,14 @@ import traceback
 from pathlib import Path
 
 
-# Standard I/O's encoding
-STDOUT_ENCODING = sys.stdout.encoding or sys.getdefaultencoding()
-STDIN_ENCODING = sys.stdin.encoding or sys.getdefaultencoding()
+# List of encodings to try before tapping out
+POSSIBLE_ENCODINGS = [
+    sys.stdout.encoding or sys.getdefaultencoding(),
+    sys.stdin.encoding or sys.getdefaultencoding(),
+    'utf-8',
+    'euc-kr',
+    'ascii'
+]
 
 # Logging level
 #  - 0: No logging
@@ -36,6 +41,20 @@ def log_debug(*args, **kwargs):
         print(*args, **kwargs)
 
 
+def try_decode(s: bytes) -> str:
+    """Try to decode a string using a list of encodings."""
+    for encoding in POSSIBLE_ENCODINGS:
+        try:
+            log_debug(f"Trying encoding {encoding}...")
+            return s.decode(encoding)
+        except UnicodeError as e:
+            log_debug(f"Failed! {e.reason}")
+
+    log_info(f"Failed to decode {s}!")
+    log_info(f"I tried: {POSSIBLE_ENCODINGS}")
+    raise UnicodeError("Failed to decode a byte array.")
+
+
 def run_without_input(script_path: Path) -> str:
     """Run a file and return its output."""
     log_info(f"Running file {script_path}...")
@@ -43,7 +62,7 @@ def run_without_input(script_path: Path) -> str:
         ['python', script_path],
         stderr=subprocess.STDOUT
     )
-    return True, output.decode(STDOUT_ENCODING)
+    return True, try_decode(output)
 
 
 def run_with_input(script_path: Path, input_path: Path) -> str:
@@ -55,7 +74,7 @@ def run_with_input(script_path: Path, input_path: Path) -> str:
             stdin=f,
             stderr=subprocess.STDOUT
         )
-    return True, output.decode(STDOUT_ENCODING)
+    return True, try_decode(output)
 
 
 def run(script_path: Path, input_path: Path = None) -> str:
@@ -68,11 +87,13 @@ def run(script_path: Path, input_path: Path = None) -> str:
         else:
             return run_with_input(script_path, input_path)
     except subprocess.CalledProcessError as e:
+        error_output = try_decode(e.outout)
         # Oh no who would've guessed
         log_info("Student's code failed to run!")
-        log_info("Output:", e.output.decode("utf-8"))
+        log_info("Output:", error_output)
         
-        return False, e.output.decode("utf-8")
+        return False, error_output
+
 
 if __name__ == '__main__':
     # Create a parser object
