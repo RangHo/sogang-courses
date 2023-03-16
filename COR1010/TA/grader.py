@@ -5,7 +5,6 @@ import sys
 
 import argparse
 import csv
-import logging
 import subprocess
 import re
 import traceback
@@ -13,48 +12,90 @@ import traceback
 from pathlib import Path
 
 
-# Standard I/O's encoding
-STDOUT_ENCODING = sys.stdout.encoding or sys.getdefaultencoding()
-STDIN_ENCODING = sys.stdin.encoding or sys.getdefaultencoding()
+# List of encodings to try before tapping out
+POSSIBLE_ENCODINGS = [
+    sys.stdout.encoding or sys.getdefaultencoding(),
+    sys.stdin.encoding or sys.getdefaultencoding(),
+    'euc-kr',
+    'utf-8',
+    'utf-16',
+    'ascii'
+]
+
+# Logging level
+#  - 0: No logging
+#  - 1: Informational info
+#  - 2: Debugging info
+LOG_LEVEL = 1
+
+
+def log_info(*args, **kwargs):
+    """Log an informational message."""
+    if LOG_LEVEL > 0:
+        print(*args, **kwargs)
+
+
+def log_debug(*args, **kwargs):
+    """Log a debugging message."""
+    if LOG_LEVEL > 1:
+        print(*args, **kwargs)
+
+
+def try_decode(s: bytes) -> str:
+    """Try to decode a string using a list of encodings."""
+    for encoding in POSSIBLE_ENCODINGS:
+        try:
+            log_debug(f"Trying encoding {encoding}...")
+            decoded_s = s.decode(encoding)
+            log_debug(f"Success! Decoded result is: {decoded_s}")
+            return decoded_s
+        except UnicodeError as e:
+            log_debug(f"Failed! {e.reason}")
+
+    log_info(f"Failed to decode {s}!")
+    log_info(f"I tried: {POSSIBLE_ENCODINGS}")
+    raise UnicodeError("Failed to decode a byte array.")
 
 
 def run_without_input(script_path: Path) -> str:
     """Run a file and return its output."""
-    print(f"Running file {script_path}...")
+    log_info(f"Running file {script_path}...")
     output = subprocess.check_output(
         ['python', script_path],
         stderr=subprocess.STDOUT
     )
-    return True, output.decode(STDOUT_ENCODING)
+    return try_decode(output)
 
 
 def run_with_input(script_path: Path, input_path: Path) -> str:
     """Run a file with a given input as stdin and return its output."""
-    print(f"Running file {script_path} with input {input_path}...")
+    log_info(f"Running file {script_path} with input {input_path}...")
     with open(input_path, "r") as f:
         output = subprocess.check_output(
             ['python', script_path],
             stdin=f,
             stderr=subprocess.STDOUT
         )
-    return True, output.decode(STDOUT_ENCODING)
+    return try_decode(output)
 
 
-def run(script_path: Path, input_path: Path = None) -> str:
+def run(script_path: Path, input_path: Path = None) -> (bool, str):
     """Run a script and return its output."""
 
     # Of course, their code can set this computer on fire
     try:
         if input_path is None:
-            return run_without_input(script_path)
+            return True, run_without_input(script_path)
         else:
-            return run_with_input(script_path, input_path)
+            return True, run_with_input(script_path, input_path)
     except subprocess.CalledProcessError as e:
         # Oh no who would've guessed
-        print("Student's code failed to run!")
-        print("Output:", e.output.decode("utf-8"))
+        error_output = try_decode(e.outout)
+
+        log_info("Student's code failed to run!")
+        log_info("Output:", error_output)
         
-        return False, e.output.decode("utf-8")
+        return False, error_output
 
 
 if __name__ == '__main__':
@@ -102,6 +143,20 @@ if __name__ == '__main__':
         help='The file name of the CSV file containing the result'
     )
 
+    # How talkative should I be?
+    parser.add_argument(
+        '-v',
+        '--verbose',
+        action='store_true',
+        help='Make this program talkative'
+    )
+    parser.add_argument(
+        '-q',
+        '--quiet',
+        action='store_true',
+        help='Make this program shut up'
+    )
+
     # Directory setting
     parser.add_argument(
         'directory',
@@ -110,6 +165,12 @@ if __name__ == '__main__':
 
     # Parse the command line arguments
     args = parser.parse_args()
+
+    # Let's set the log level first
+    if args.verbose:
+        LOG_LEVEL += 1
+    if args.quiet:
+        LOG_LEVEL -= 1
 
     # There are four different ways to provide the grading strategy:
     #  - Provide an answer code;
@@ -198,11 +259,13 @@ if __name__ == '__main__':
 
     # Print the result just in case...
     for row in results:
-        print(f"{row[0]}'s code in {row[1]} is {row[4]}.")
+        log_info(f"{row[0]}'s code in {row[1]} is {row[4]}.")
 
     # ...and save it if the user asked to do so
     if args.csv_out is not None:
-        print("Writing to a CSV file: " + args.csv_out)
+        log_info("Writing to a CSV file: " + args.csv_out)
+
+        # Add BOM as Excel doesn't like CSV files without metadata
         with open(args.csv_out, 'w', encoding='utf-8-sig') as f:
             writer = csv.writer(f)
             writer.writerows([s.replace('\n', '\\n') for s in row] for row in results)
