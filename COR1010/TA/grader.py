@@ -5,7 +5,6 @@ import sys
 
 import argparse
 import csv
-import logging
 import subprocess
 import re
 import traceback
@@ -17,8 +16,9 @@ from pathlib import Path
 POSSIBLE_ENCODINGS = [
     sys.stdout.encoding or sys.getdefaultencoding(),
     sys.stdin.encoding or sys.getdefaultencoding(),
-    'utf-8',
     'euc-kr',
+    'utf-8',
+    'utf-16',
     'ascii'
 ]
 
@@ -46,7 +46,9 @@ def try_decode(s: bytes) -> str:
     for encoding in POSSIBLE_ENCODINGS:
         try:
             log_debug(f"Trying encoding {encoding}...")
-            return s.decode(encoding)
+            decoded_s = s.decode(encoding)
+            log_debug(f"Success! Decoded result is: {decoded_s}")
+            return decoded_s
         except UnicodeError as e:
             log_debug(f"Failed! {e.reason}")
 
@@ -62,7 +64,7 @@ def run_without_input(script_path: Path) -> str:
         ['python', script_path],
         stderr=subprocess.STDOUT
     )
-    return True, try_decode(output)
+    return try_decode(output)
 
 
 def run_with_input(script_path: Path, input_path: Path) -> str:
@@ -74,21 +76,22 @@ def run_with_input(script_path: Path, input_path: Path) -> str:
             stdin=f,
             stderr=subprocess.STDOUT
         )
-    return True, try_decode(output)
+    return try_decode(output)
 
 
-def run(script_path: Path, input_path: Path = None) -> str:
+def run(script_path: Path, input_path: Path = None) -> (bool, str):
     """Run a script and return its output."""
 
     # Of course, their code can set this computer on fire
     try:
         if input_path is None:
-            return run_without_input(script_path)
+            return True, run_without_input(script_path)
         else:
-            return run_with_input(script_path, input_path)
+            return True, run_with_input(script_path, input_path)
     except subprocess.CalledProcessError as e:
-        error_output = try_decode(e.outout)
         # Oh no who would've guessed
+        error_output = try_decode(e.outout)
+
         log_info("Student's code failed to run!")
         log_info("Output:", error_output)
         
@@ -261,6 +264,8 @@ if __name__ == '__main__':
     # ...and save it if the user asked to do so
     if args.csv_out is not None:
         log_info("Writing to a CSV file: " + args.csv_out)
+
+        # Add BOM as Excel doesn't like CSV files without metadata
         with open(args.csv_out, 'w', encoding='utf-8-sig') as f:
             writer = csv.writer(f)
             writer.writerows([s.replace('\n', '\\n') for s in row] for row in results)
