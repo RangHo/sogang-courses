@@ -1,4 +1,4 @@
-<h1 align="center"><img src="https://user-images.githubusercontent.com/10833976/111170707-92b1d680-85e7-11eb-8e58-1eac6ef8998b.png" /></h1>
+<h1 align="center"><img src="https://user-images.githubusercontent.com/10833976/111170707-92b1d680-85e7-11eb-8e58-1eac6ef8998b.png" alt="Sogang Course Materials: Together, we are strong." /></h1>
 
 ### 이곳은 서강대학교에서 들은 수업의 과제 및 시험 등을 공유하는 리포지토리입니다.
 
