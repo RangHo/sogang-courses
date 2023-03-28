@@ -1,0 +1,12 @@
+sentence = " 1.This class is computational thinking!"
+print("현재 문자열은:", sentence)
+print("소문자로만 되어 있나요?",sentence.islower())
+print("대문자로만 되어 있나요?",sentence.isupper())
+print("알파벳으로만 되어 있나요?",sentence.isalpha())
+print("알파벳과 숫자로만 되어 있나요?",sentence.isalnum())
+print("소문자로 변환:" , sentence.lower())
+print("대문자로 변환:" , sentence.upper())
+print("대소문자 상호 변환:" , sentence.swapcase())
+print("단어의 앞글자만 대문자로:" , sentence.title())
+print("!:~~~:" , sentence.replace("!","~~~"))
+print("문자열 앞의 스페이스 제거:",sentence.lstrip())
