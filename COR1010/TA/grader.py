@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 
-import os
 import sys
 
 import argparse
 import csv
 import subprocess
 import re
-import traceback
 
 from pathlib import Path
 
+from typing import Optional
 
 # List of encodings to try before tapping out
 POSSIBLE_ENCODINGS = [
@@ -50,7 +49,7 @@ def try_decode(s: bytes) -> str:
             log_debug(f"Success! Decoded result is: {decoded_s}")
             return decoded_s
         except UnicodeError as e:
-            log_debug(f"Failed! {e.reason}")
+            log_debug(f"Failed! {e}")
 
     log_info(f"Failed to decode {s}!")
     log_info(f"I tried: {POSSIBLE_ENCODINGS}")
@@ -79,7 +78,7 @@ def run_with_input(script_path: Path, input_path: Path) -> str:
     return try_decode(output)
 
 
-def run(script_path: Path, input_path: Path = None) -> (bool, str):
+def run(script_path: Path, input_path: Optional[Path] = None) -> tuple[bool, str]:
     """Run a script and return its output."""
 
     # Of course, their code can set this computer on fire
@@ -90,7 +89,7 @@ def run(script_path: Path, input_path: Path = None) -> (bool, str):
             return True, run_with_input(script_path, input_path)
     except subprocess.CalledProcessError as e:
         # Oh no who would've guessed
-        error_output = try_decode(e.outout)
+        error_output = try_decode(e.output)
 
         log_info("Student's code failed to run!")
         log_info("Output:", error_output)
