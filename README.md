@@ -23,8 +23,8 @@
 | `COR1010` | [기초인공지능프로그래밍](COR1010) | 2023-01 | 실습, 과제, TA용 유틸리티 |
 
 
-## 📝 라이센스 및 면책 조항
-이 리포지토리에 있는 모든 소스코드 파일은 따로 명시되지 않는 한 `GNU General Public License version 3`에 따라 배포됩니다. 라이센스 전문은 [LICENSE](LICENSE) 파일을 참고해 주세요. 또, 소스코드 이외의 모든 문서 또는 저작물은 따로 명시되지 않는 한 `CC-BY-NC-SA 4.0 International` 라이센스에 따라 배포됩니다. Creative Commons 라이센스에 관한 자세한 내용은 다음 배지 버튼을 눌러 확인해 주세요. <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+## 📝 라이센스 및 면책 조항 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+이 리포지토리에 있는 모든 소스코드 파일은 따로 명시되지 않는 한 `GNU General Public License version 3`에 따라 배포됩니다. GPL 라이센스 전문은 [GPLv3 LICENSE](LICENSE.GPLv3) 파일을 참고해 주세요. 또, 소스코드 이외의 모든 문서 또는 저작물은 따로 명시되지 않는 한 `CC-BY-NC-SA 4.0 International` 라이센스에 따라 배포됩니다. Creative Commons 라이센스 전문은 [CC-BY-NC-SA LICENSE](LICENSE.CC-BY-NC-SA-4.0-International) 파일을 참고해 주세요.
 
 또한, 이 리포지토리에 있는 자료를 사용하여 발생하는 모든 불이익은 **자료를 사용한 개인에게 책임이 있으며**, 리포지토리 기여자에게는 책임이 없음을 미리 알려드립니다.
 
