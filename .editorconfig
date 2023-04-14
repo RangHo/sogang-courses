@@ -17,6 +17,16 @@ tab_width = 8
 indent_style = space
 indent_size = 4
 
+# Java file conventions
+[*.java]
+indent_style = space
+indent_size = 4
+
+# Kotlin file conventions
+[*.kt]
+indent_style = space
+indent_size = 4
+
 # Python file conventions
 [*.py]
 indent_style = space
@@ -28,4 +38,7 @@ indent_style = space
 indent_size = 2
 trim_trailing_whitespace = false
 
-
+# LaTeX file conventions
+[*.{tex,cls,sty}]
+indent_style = space
+indent_size = 2
