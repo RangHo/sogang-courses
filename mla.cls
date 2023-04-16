@@ -45,6 +45,49 @@
 \usepackage[style=mla]{biblatex}
 
 
+%% Macro definitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% MLA header information (existing)
+\renewcommand\date[1]{%
+  \def\MLA@date{#1}%
+}
+\renewcommand\title[1]{%
+  \def\MLA@title{#1}%
+}
+
+% MLA header information (new)
+\newcommand\firstname[1]{%
+  \def\MLA@firstname{#1}%
+}
+\newcommand\lastname[1]{%
+  \def\MLA@lastname{#1}%
+  \markright{\hfill\textup{\MLA@lastname}\space}
+}
+\newcommand\instructor[1]{%
+  \def\MLA@instructor{#1}%
+}
+\newcommand\course[1]{%
+  \def\MLA@course{#1}%
+}
+
+% Make MLA-compliant title
+\renewcommand\maketitle{%
+  \noindent\MLA@firstname\space\MLA@lastname
+
+  \noindent\MLA@instructor
+
+  \noindent\MLA@course
+
+  \noindent\MLA@date
+
+  \begin{center}
+    \MLA@title
+  \end{center}
+
+  \indent%
+}
+
+
 %% Page settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Set paper geometry (margin should be 1 inch all around)
@@ -72,48 +115,15 @@
 
 % Change bibliography header
 \defbibheading{bibliography}{
-  \newpage
+  \clearpage
   \begin{center}
     Works cited
   \end{center}
 }
 
-
-%% Macro definitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% MLA header information (existing)
-\renewcommand\author[1]{
-  \def\MLA@author{#1}
-}
-\renewcommand\date[1]{
-  \def\MLA@date{#1}
-}
-\renewcommand\title[1]{
-  \def\MLA@title{#1}
-}
-
-% MLA header information (new)
-\newcommand\instructor[1]{
-  \def\MLA@instructor{#1}
-}
-\newcommand\course[1]{
-  \def\MLA@course{#1}
-}
-
-% Make MLA-compliant title
-\renewcommand\maketitle{
-  \noindent\MLA@author
-
-  \noindent\MLA@instructor
-
-  \noindent\MLA@course
-
-  \noindent\MLA@date
-
-  \begin{center}
-    \MLA@title
-  \end{center}
-}
+% Customize headings
+\pagestyle{myheadings}
+\setlength\topmargin{-0.5in}
 
 
 %% Before and after document handlers %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
