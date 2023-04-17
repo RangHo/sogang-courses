@@ -9,9 +9,9 @@
 #define HISTFILE ".myshell_history"
 #define HISTFILESIZE 128
 
-#define PARSE_RESULT_FOREGROUND 0
-#define PARSE_RESULT_BACKGROUND 1
+#define PARSE_RESULT_OK 0
 #define PARSE_ERROR_UNMATCHED_QUOTE -1
+#define PARSE_ERROR_EXPECTED_EOL -2
 
 
 /* Utility macro definitions **************************************************/
@@ -22,11 +22,36 @@
 #endif
 
 
+/* Data structures ************************************************************/
+struct node {
+    enum {
+        NODE_TYPE_COMMAND,
+        NODE_TYPE_PIPE,
+    } type;
+    union {
+        struct {
+            int argc;
+            char* argv[MAXLINE];
+            bool background;
+        } command;
+        struct {
+            struct node* left;
+            struct node* right;
+        } pipe;
+    } data;
+};
+
+
 /* Function prototypes ********************************************************/
 
 /* Main evaluation helpers */
 void eval(char* cmdline);
-int parse(char* buf, char* argv[]);
+int parse(char* buf, struct node** prog);
+
+/* Command parsing helpers */
+struct node* node_new();
+void node_delete(struct node* node);
+void node_debug(struct node* node);
 
 /* Built-in command handlers */
 int builtin_quit(char* argv[]);
@@ -96,11 +121,14 @@ void eval(char* cmdline)
     strcpy(buf, cmdline);
     debug("eval: Content of buf: %s", buf);
 
-    parse_result = parse(buf, argv);
-    debug(
-        "eval: Is background job? %s\n",
-        parse_result == PARSE_RESULT_BACKGROUND ? "Yes" : "No"
-    );
+    struct node* prog;
+    parse_result = parse(buf, &prog);
+
+#ifdef DEBUG
+    node_debug(prog);
+    node_delete(prog);
+    return;
+#endif
 
     /* Ignore empty lines */
     if (argv[0] == NULL)
@@ -127,14 +155,10 @@ void eval(char* cmdline)
 
     int status;
     switch (parse_result) {
-    case PARSE_RESULT_FOREGROUND:
+    case PARSE_RESULT_OK:
         /* Wait for the child process to terminate */
         if (waitpid(pid, &status, 0) < 0)
             unix_error("eval: Waitpid error");
-
-        break;
-
-    case PARSE_RESULT_BACKGROUND:
         /* Do not wait for the child process to terminate */
         printf("%d %s", pid, cmdline);
         break;
@@ -182,7 +206,7 @@ int builtin_command(char* argv[])
 }
 
 /* Built-in `quit` command handler */
-int builtin_quit(char* _argv[])
+int builtin_quit(char* _[])
 {
     debug("builtin_quit: Quitting.\n");
 
@@ -207,7 +231,7 @@ int builtin_cd(char* argv[])
 }
 
 /* Built-in `history` command handler */
-int builtin_history(char* _argv[])
+int builtin_history(char* _[])
 {
     debug("builtin_history: Displaying history...\n");
 
@@ -239,7 +263,7 @@ int builtin_history(char* _argv[])
 }
 
 /* Built-in `!!` command handler */
-int builtin_history_replay(char* _argv[])
+int builtin_history_replay(char* _[])
 {
     debug("builtin_history_replay: Replaying last command...\n");
 
@@ -282,11 +306,12 @@ int builtin_history_at(char* argv[])
 
 /* $begin parse */
 /* parse - Parse the command line and build the argv array */
-int parse(char* buf, char* argv[])
+int parse(char* buf, struct node** prog)
 {
-    char* word;  /* Points to the beginning of the word */
-    char quote;  /* The current quotation mark */
-    int argc;    /* Number of args */
+    /* Result node */
+    struct node* result = node_new();
+    result->type = NODE_TYPE_COMMAND;
+    result->data.command.background = false;
 
     /* Ignore leading spaces */
     while (*buf && is_whitespace(*buf))
@@ -298,23 +323,124 @@ int parse(char* buf, char* argv[])
     debug("parse: Trimmed command: %s\n", buf);
 
     /* Parse the command line */
-    argc = 0;
-    word = NULL;
-    quote = '\0';
-    while (*buf) {
+    int argc = 0;
+    char* word = NULL;
+    char quote = '\0';
+    struct node** target = &result;
+    while (1) {
         /* Cases to consider:
              1. If the current character is a quotation and quote is NUL,
                 then it is a beginning of a quoted string.
-             2. If the current character is a whitespace and word is NULL,
-                ignore and process the next character.
+             2. If the current character is a quotation and quote is not NUL,
+                then it is an ending of a quoted string.
              3. If the current character is not a whitespace and word is NULL,
                 then we are at the beginning of a word.
              4. If the current character is a whitespace and word is not NULL,
                 then we are at the end of a word.
-             5. If the current character is not a whitespace and word is not NULL
-                ignore and process the next character. */
+             5. If the current character is a whitespace and word is NULL,
+                ignore and process the next character.
+             6. If the current character is not a whitespace and word is not NULL
+                ignore and process the next character.
+             7. If the current character is an ampersand, wrap up everything and
+                expect an EOL.
+             8. If the current character is a pipe, wrap up the current command
+                and setup a new command target to parse
+             9. If the current character is EOL, wrap up. */
 
-        if (is_quotation(*buf) && quote == '\0') {
+        
+        if (*buf == '\0') {
+            /* EOL */
+            debug("parse: End of line.\n");
+
+            /* If we are in a quoted string, it is an error */
+            if (quote != '\0') {
+                printf("parse: Unmatched quote.\n");
+                return PARSE_ERROR_UNMATCHED_QUOTE;
+            }
+
+            /* Make sure that the argv ends with NULL */
+            (*target)->data.command.argv[argc] = NULL;
+
+            /* Set the argument count */
+            (*target)->data.command.argc = argc;
+
+            /* We are done */
+            break;
+        } else if (*buf == '&' && quote == '\0') {
+            /* ampersand */
+            debug("parse: Background job indicator.\n");
+
+            /* If we are in the middle of a word, wrap it up */
+            if (word != NULL) {
+                *buf = '\0';
+                (*target)->data.command.argv[argc++] = word;
+                debug("The word is '%s'.\n", word);
+                word = NULL;
+            }
+
+            /* Make sure that the argv ends with NULL */
+            (*target)->data.command.argv[argc] = NULL;
+
+            /* Set the argument count */
+            (*target)->data.command.argc = argc;
+
+            /* Set the background flag */
+            (*target)->data.command.background = true;
+
+            /* Skip the ampersand */
+            buf++;
+
+            /* Skip the trailing spaces */
+            while (*buf && is_whitespace(*buf))
+                buf++;
+
+            /* Make sure that the next character is EOL */
+            if (*buf != '\0') {
+                printf("parse: Unexpected character '%c' after '&'.\n", *buf);
+                return PARSE_ERROR_EXPECTED_EOL;
+            }
+
+            /* We are done */
+            break;
+        } else if (*buf == '|' && quote == '\0') {
+            /* pipe */
+            debug("parse: Pipe found.\n");
+
+            /* If we are in the middle of a word, wrap it up */
+            if (word != NULL) {
+                *buf = '\0';
+                (*target)->data.command.argv[argc++] = word;
+                debug("The word is '%s'.\n", word);
+                word = NULL;
+            }
+
+            /* Make sure that the argv ends with NULL */
+            (*target)->data.command.argv[argc] = NULL;
+
+            /* Set the argument count */
+            (*target)->data.command.argc = argc;
+
+            /* Create a new pipe container node */
+            struct node* pipe = node_new();
+            pipe->type = NODE_TYPE_PIPE;
+
+            /* The current target node becomes the "left" of pipe */
+            pipe->data.pipe.left = *target;
+
+            /* The new target node becomes the "right" of pipe */
+            pipe->data.pipe.right = node_new();
+            pipe->data.pipe.right->type = NODE_TYPE_COMMAND;
+            pipe->data.pipe.right->data.command.background = false;
+
+            /* Update the target node */
+            *target = pipe;
+
+            /* Set the new target node */
+            target = &pipe->data.pipe.right;
+
+            /* Reset the argument count */
+            argc = 0;
+        } else if (is_quotation(*buf) && quote == '\0') {
             /* 1. quotation and quote is NUL */
             debug("parse: Beginning of a quoted string starting with '%c'.\n",
                   *buf);
@@ -324,10 +450,10 @@ int parse(char* buf, char* argv[])
             /* 2. quotation and quote is not NUL */
             debug("parse: End of a quoted string.\n");
             *buf = '\0';
-            argv[argc++] = word;
+            (*target)->data.command.argv[argc++] = word;
+            debug("The word is '%s'.\n", word);
             word = NULL;
             quote = '\0';
-            debug("The word is '%s'.\n", argv[argc - 1]);
         } else if (!is_whitespace(*buf) && word == NULL) {
             /* 3. not whitespace and word is NULL */
             debug("parse: Beginning of a word starting with '%c'.\n", *buf);
@@ -336,9 +462,9 @@ int parse(char* buf, char* argv[])
             /* 4. whitespace and word is not NULL */
             debug("parse: End of a word.\n");
             *buf = '\0';
-            argv[argc++] = word;
+            (*target)->data.command.argv[argc++] = word;
+            debug("The word is '%s'.\n", word);
             word = NULL;
-            debug("The word is '%s'.\n", argv[argc - 1]);
         } else if (is_whitespace(*buf) && word == NULL) {
             /* 5. whitespace and word is NULL */
             debug("parse: Ignoring whitespace.\n");
@@ -357,22 +483,54 @@ int parse(char* buf, char* argv[])
         buf++;
     }
 
-    /* Add a NULL pointer to the end of the argv array */
-    argv[argc] = NULL;
-    
-    /* Ignore empty lines */
-    if (argc == 0) {
-        debug("parse: Empty line. Returning early.\n");
-        argv[0] = NULL;
-        return PARSE_RESULT_FOREGROUND;
+    /* Set the result */
+    *prog = result;
+
+    return PARSE_RESULT_OK;
+}
+
+/* node_new - Create a new node */
+struct node* node_new()
+{
+    struct node* node = malloc(sizeof(struct node));
+    return node;
+}
+
+/* node_delete - Delete a node */
+void node_delete(struct node* node)
+{
+    /* In case of a pipe node, recursively delete the nodes */
+    if (node->type == NODE_TYPE_PIPE) {
+        node_delete(node->data.pipe.left);
+        node_delete(node->data.pipe.right);
     }
 
-    /* Should the job run in the background? */
-    if ((*argv[argc - 1] == '&') != 0) {
-        argv[--argc] = NULL;
-        return PARSE_RESULT_BACKGROUND;
-    } else {
-        return PARSE_RESULT_FOREGROUND;
+    /* Now self-destruct */
+    free(node);
+}
+
+/* node_debug - Print a node, if debugging is enabled */
+void node_debug(struct node* node)
+{
+    if (node->type == NODE_TYPE_COMMAND) {
+        debug(
+            "node_debug: %s command node: %s\n",
+            node->data.command.background
+                ? "Background"
+                : "Foreground",
+            node->data.command.argv[0]
+        );
+        debug("node_debug: It has %d arguments: ", node->data.command.argc);
+        for (int i = 0; i < node->data.command.argc; i++) {
+            debug("%s ", node->data.command.argv[i]);
+        }
+        debug("\n");
+    } else if (node->type == NODE_TYPE_PIPE) {
+        debug("node_debug: Pipe node:\n");
+        debug("node_debug: Left:\n");
+        node_debug(node->data.pipe.left);
+        debug("node_debug: Right:\n");
+        node_debug(node->data.pipe.right);
     }
 }
 
@@ -391,7 +549,7 @@ bool is_quotation(char c)
 
 /* $begin handlers */
 /* handle_sigchld - SIGCHLD signal handler */
-void handle_sigchld(int _sig)
+void handle_sigchld(int _)
 {
     int status;
     pid_t pid;
