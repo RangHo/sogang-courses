@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <string.h>
 
 #include <errno.h>
 
@@ -25,6 +26,7 @@
 /* Data structures ************************************************************/
 struct node {
     enum {
+        NODE_TYPE_EMPTY,
         NODE_TYPE_COMMAND,
         NODE_TYPE_PIPE,
     } type;
@@ -46,24 +48,24 @@ struct node {
 
 /* Main evaluation helpers */
 void eval(char* cmdline);
+void eval_node(struct node* node);
 int parse(char* buf, struct node** prog);
 
 /* Command parsing helpers */
 struct node* node_new();
 void node_delete(struct node* node);
 void node_debug(struct node* node);
+void node_string(struct node* node, char* buf);
 
 /* Built-in command handlers */
 int builtin_quit(char* argv[]);
 int builtin_command(char* argv[]);
 int builtin_cd(char* argv[]);
 int builtin_history(char* argv[]);
-int builtin_history_replay(char* argv[]);
-int builtin_history_at(char* argv[]);
 
 /* History helpers */
 void history_init();
-void history_add(char* cmdline);
+void history_add(struct node* node);
 void history_at(int index, char* buf);
 void history_last(char* buf);
 
@@ -78,6 +80,7 @@ void handle_sigchld(int sig);
 
 /* Global variables ***********************************************************/
 bool history_enabled = true;
+bool history_replaced = false;
 
 
 /* Function implementations ***************************************************/
@@ -124,57 +127,70 @@ void eval(char* cmdline)
     struct node* prog;
     parse_result = parse(buf, &prog);
 
+    /* Add the command to history*/
+    history_add(prog);
+
 #ifdef DEBUG
     node_debug(prog);
-    node_delete(prog);
-    return;
 #endif
 
-    /* Ignore empty lines */
-    if (argv[0] == NULL)
-        return;
+    eval_node(prog);
 
-    /* Add the command to history if they don't start with a bang */
-    if (history_enabled && argv[0][0] != '!')
-        history_add(cmdline);
+    node_delete(prog);
+}
 
-    /* If the command is a built-in one, run that */
-    if (builtin_command(argv))
-        return;
+/* eval_node - Evaluate a node */
+void eval_node(struct node* node)
+{
+    switch (node->type) {
+    case NODE_TYPE_EMPTY:
+        /* Do nothing */
+        debug("eval_node: Empty node.\n");
+        break;
 
-    /* Otherwise, fork a child process and run the command */
-    if ((pid = fork()) == 0) {
-        /* This is inside the child process */
-        if (execvp(argv[0], argv) < 0) {
-            printf("%s: Command not found.\n", argv[0]);
-            exit(0);
+    case NODE_TYPE_COMMAND:
+        /* Run the command */
+        debug("eval_node: Command node.\n");
+
+        /* If the command is a built-in one, run that */
+        if (builtin_command(node->data.command.argv))
+            return;
+
+        /* Otherwise, fork a child process and run the command */
+        pid_t pid;
+        if ((pid = fork()) == 0) {
+            /* This is inside the child process */
+            if (execvp(node->data.command.argv[0], node->data.command.argv) < 0) {
+                printf("%s: Command not found.\n", node->data.command.argv[0]);
+                exit(0);
+            }
+
+            /* This code path should never be reached */
         }
 
-        /* This code path should never be reached */
-    }
-
-    int status;
-    switch (parse_result) {
-    case PARSE_RESULT_OK:
         /* Wait for the child process to terminate */
+        int status;
         if (waitpid(pid, &status, 0) < 0)
-            unix_error("eval: Waitpid error");
-        /* Do not wait for the child process to terminate */
-        printf("%d %s", pid, cmdline);
+            unix_error("eval_node: waitpid error");
+        break;
+
+    case NODE_TYPE_PIPE:
+        /* TBD */
+        debug("eval_node: Pipe node.\n");
         break;
 
     default:
         /* This code path should never be reached */
-        printf("eval: Unknown parse result: %d\n", parse_result);
+        printf("eval_node: Unknown node type: %d\n", node->type);
         break;
     }
+
 }
 
 /* If first arg is a builtin command, run it and return true */
 int builtin_command(char* argv[])
 {
-    debug(
-          "builtin_command: Checking if %s is a built-in command...\n", argv[0]);
+    debug("builtin_command: Checking if %s is a built-in command...\n", argv[0]);
 
     /* `quit` or `exit` command */
     if (!strcmp(argv[0], "quit") || !strcmp(argv[0], "exit"))
@@ -187,14 +203,6 @@ int builtin_command(char* argv[])
     /* `history` command */
     if (!strcmp(argv[0], "history"))
         return builtin_history(argv);
-
-    /* `!!` command */
-    if (!strcmp(argv[0], "!!"))
-        return builtin_history_replay(argv);
-    
-    /* `!N` command */
-    if (argv[0][0] == '!')
-        return builtin_history_at(argv);
 
     /* Ignore singleton `&` */
     if (!strcmp(argv[0], "&"))
@@ -219,8 +227,10 @@ int builtin_quit(char* _[])
 /* Built-in `cd` command handler */
 int builtin_cd(char* argv[])
 {
-    debug("builtin_cd: Changing directory to \"%s\"...\n",
-          argv[1] != NULL ? argv[1] : "~");
+    debug(
+        "builtin_cd: Changing directory to \"%s\"...\n",
+        argv[1] != NULL ? argv[1] : "~"
+    );
 
     /* If no argument is given, go to home directory */
     if (argv[1] == NULL)
@@ -261,56 +271,20 @@ int builtin_history(char* _[])
 
     return 1;
 }
-
-/* Built-in `!!` command handler */
-int builtin_history_replay(char* _[])
-{
-    debug("builtin_history_replay: Replaying last command...\n");
-
-    /* Command line buffer */
-    char cmdline[MAXLINE];
-
-    /* Get the last command from history */
-    history_last(cmdline);
-
-    /* Disable history for now */
-    history_enabled = false;
-
-    /* Evaluate the command */
-    eval(cmdline);
-
-    /* Re-enable history */
-    history_enabled = true;
-
-    return 1;
-}
-
-/* Built-in `!N` command handler */
-int builtin_history_at(char* argv[])
-{
-    int index = atoi(argv[0] + 1);
-    debug("builtin_history_at: Replaying command at index %d...\n", index);
-
-    /* Command line buffer */
-    char cmdline[MAXLINE];
-
-    /* Get the command at the given index from history */
-    history_at(index, cmdline);
-
-    /* Evaluate the command */
-    eval(cmdline);
-
-    return 1;
-}
 /* $end eval */
 
 /* $begin parse */
 /* parse - Parse the command line and build the argv array */
 int parse(char* buf, struct node** prog)
 {
+    /* Temporary buffer to do string manipulations */
+    static char temp_buf[MAXLINE];
+
     /* Result node */
     struct node* result = node_new();
     result->type = NODE_TYPE_COMMAND;
+    result->data.command.argc = 0;
+    result->data.command.argv[0] = NULL;
     result->data.command.background = false;
 
     /* Ignore leading spaces */
@@ -327,25 +301,29 @@ int parse(char* buf, struct node** prog)
     char* word = NULL;
     char quote = '\0';
     struct node** target = &result;
+    history_replaced = false;
     while (1) {
+        /* Show current state */
+        debug("parse: Current state: %x %x %d\n", buf, word, quote);
+
         /* Cases to consider:
-             1. If the current character is a quotation and quote is NUL,
-                then it is a beginning of a quoted string.
-             2. If the current character is a quotation and quote is not NUL,
-                then it is an ending of a quoted string.
-             3. If the current character is not a whitespace and word is NULL,
-                then we are at the beginning of a word.
-             4. If the current character is a whitespace and word is not NULL,
-                then we are at the end of a word.
-             5. If the current character is a whitespace and word is NULL,
-                ignore and process the next character.
-             6. If the current character is not a whitespace and word is not NULL
-                ignore and process the next character.
-             7. If the current character is an ampersand, wrap up everything and
-                expect an EOL.
-             8. If the current character is a pipe, wrap up the current command
-                and setup a new command target to parse
-             9. If the current character is EOL, wrap up. */
+           1. If the current character is a quotation and quote is NUL,
+           then it is a beginning of a quoted string.
+           2. If the current character is a quotation and quote is not NUL,
+           then it is an ending of a quoted string.
+           3. If the current character is not a whitespace and word is NULL,
+           then we are at the beginning of a word.
+           4. If the current character is a whitespace and word is not NULL,
+           then we are at the end of a word.
+           5. If the current character is a whitespace and word is NULL,
+           ignore and process the next character.
+           6. If the current character is not a whitespace and word is not NULL
+           ignore and process the next character.
+           7. If the current character is an ampersand, wrap up everything and
+           expect an EOL.
+           8. If the current character is a pipe, wrap up the current command
+           and setup a new command target to parse
+           9. If the current character is EOL, wrap up. */
 
         
         if (*buf == '\0') {
@@ -440,6 +418,58 @@ int parse(char* buf, struct node** prog)
 
             /* Reset the argument count */
             argc = 0;
+        } else if (*buf == '!' && quote == '\0') {
+            /* bang -> history related replacements */
+            debug("parse: Bang found.\n");
+
+            /* Is this !!? */
+            if (strncmp(buf, "!!", 2) == 0) {
+                /* Get the last command from history into temporary buffer */
+                history_last(temp_buf);
+
+                /* Replace trailing newline with NUL */
+                temp_buf[strlen(temp_buf) - 1] = '\0';
+
+                /* Concatenate the rest into the temporary buffer */
+                strcat(temp_buf, buf + 2);
+
+                /* Copy the temporary buffer back to the original buffer */
+                strcpy(buf, temp_buf);
+
+                /* Reset the temporary buffer */
+                temp_buf[0] = '\0';
+
+                /* Try this buffer again */
+                continue;
+            }
+
+            /* Is this !N? */
+            int i = 0;
+            while (isdigit(buf[i + 1]))
+                i++;
+
+            if (i > 0) {
+                /* History replacement occured here */
+                history_replaced = true;
+
+                /* Get the Nth command from history into temporary buffer */
+                history_at(atoi(buf + 1), temp_buf);
+
+                /* Replace trailing newline with NUL */
+                temp_buf[strlen(temp_buf) - 1] = '\0';
+
+                /* Concatenate the rest into the temporary buffer */
+                strcat(temp_buf, buf + i + 1);
+
+                /* Copy the temporary buffer back to the original buffer */
+                strcpy(buf, temp_buf);
+
+                /* Reset the temporary buffer */
+                temp_buf[0] = '\0';
+
+                /* Try this buffer again */
+                continue;
+            }
         } else if (is_quotation(*buf) && quote == '\0') {
             /* 1. quotation and quote is NUL */
             debug("parse: Beginning of a quoted string starting with '%c'.\n",
@@ -454,6 +484,9 @@ int parse(char* buf, struct node** prog)
             debug("The word is '%s'.\n", word);
             word = NULL;
             quote = '\0';
+        } else if (!is_quotation(*buf) && quote != '\0') {
+            /* 3. not in a quotation and quote is not NUL */
+            debug("parse: In a quoted string.\n");
         } else if (!is_whitespace(*buf) && word == NULL) {
             /* 3. not whitespace and word is NULL */
             debug("parse: Beginning of a word starting with '%c'.\n", *buf);
@@ -475,13 +508,15 @@ int parse(char* buf, struct node** prog)
             /* This code path should never be reached */
             printf("parse: Unknown case: %c %c %c\n", *buf, *word, quote);
         }
-
-        /* Show current state */
-        debug("parse: Current state: %x %x %d\n", buf, word, quote);
         
         /* Increment buffer pointer */
         buf++;
     }
+
+    /* If the result is a command node and argc is still 0, convert it to a
+       NODE_TYPE_EMPTY node */
+    if (result->type == NODE_TYPE_COMMAND && result->data.command.argc == 0)
+        result->type = NODE_TYPE_EMPTY;
 
     /* Set the result */
     *prog = result;
@@ -514,12 +549,12 @@ void node_debug(struct node* node)
 {
     if (node->type == NODE_TYPE_COMMAND) {
         debug(
-            "node_debug: %s command node: %s\n",
-            node->data.command.background
-                ? "Background"
-                : "Foreground",
-            node->data.command.argv[0]
-        );
+              "node_debug: %s command node: %s\n",
+              node->data.command.background
+              ? "Background"
+              : "Foreground",
+              node->data.command.argv[0]
+              );
         debug("node_debug: It has %d arguments: ", node->data.command.argc);
         for (int i = 0; i < node->data.command.argc; i++) {
             debug("%s ", node->data.command.argv[i]);
@@ -531,6 +566,32 @@ void node_debug(struct node* node)
         node_debug(node->data.pipe.left);
         debug("node_debug: Right:\n");
         node_debug(node->data.pipe.right);
+    }
+}
+
+/* node_string - Return a string representation of a node */
+void node_string(struct node* node, char* buf)
+{
+    /* Reset the buffer first */
+    buf[0] = '\0';
+
+    switch (node->type) {
+    case NODE_TYPE_EMPTY:
+        strcpy(buf, " ");
+        break;
+
+    case NODE_TYPE_COMMAND:
+        for (int i = 0; i < node->data.command.argc; i++) {
+            strcat(buf, node->data.command.argv[i]);
+            strcat(buf, " ");
+        }
+        break;
+
+    case NODE_TYPE_PIPE:
+        node_string(node->data.pipe.left, buf);
+        strcat(buf, "| ");
+        node_string(node->data.pipe.right, buf + strlen(buf));
+        break;
     }
 }
 
@@ -585,8 +646,16 @@ void history_init()
 }
 
 /* history_add - Add a command to the history file */
-void history_add(char* cmdline)
+void history_add(struct node* node)
 {
+    /* Buffer to save the stringified node */
+    static char buf[MAXLINE];
+    node_string(node, buf);
+
+    /* If history replacement happened, print the command first */
+    if (history_replaced)
+        printf("%s\n", buf);
+
     /* Open the history file */
     debug("history_add: Opening history file...\n");
     char histfile_path[MAXLINE];
@@ -597,10 +666,25 @@ void history_add(char* cmdline)
         unix_error("history_add: Failed to open history file");
     }
 
+    /* If the last command is the same as the current one, do nothing */
+    char lastcmd[MAXLINE];
+    history_last(lastcmd);
+
+    /* Remove the trailing newline */
+    lastcmd[strlen(lastcmd) - 1] = '\0';
+
+    debug("history_add: Last command: %s\n", lastcmd);
+    debug("history_add: Current command: %s\n", buf);
+    if (strcmp(lastcmd, buf) == 0) {
+        debug("history_add: The last command is the same as the current one.\n");
+        goto cleanup;
+    }
+
     /* Write the command to the history file */
     debug("history_add: Writing command to history file...\n");
-    fprintf(fp, "%s", cmdline);
+    fprintf(fp, "%s\n", buf);
 
+ cleanup:
     /* Close the file */
     fclose(fp);
 }
