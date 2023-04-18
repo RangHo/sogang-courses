@@ -76,9 +76,11 @@ bool is_quotation(char c);
 
 /* Signal handlers ************************************************************/
 void handle_sigchld(int sig);
+void handle_sigterm(int sig);
 
 
 /* Global variables ***********************************************************/
+bool exit_flag = false;
 bool history_enabled = true;
 bool history_replaced = false;
 
@@ -93,7 +95,8 @@ int main(void)
     char cmdline[MAXLINE];
 
     /* Install signal handlers */
-    Signal(SIGCHLD, handle_sigchld);
+    signal(SIGCHLD, handle_sigchld);
+    signal(SIGTERM, handle_sigterm);
 
     /* Initialize history */
     history_init();
@@ -134,7 +137,12 @@ void eval(char* cmdline)
     node_debug(prog);
 #endif
 
-    eval_node(prog);
+    if ((pid = fork()) == 0)
+        eval_node(prog);
+
+    int status;
+    if (waitpid(pid, &status, 0) < 0)
+        unix_error("eval: waitpid error");
 
     node_delete(prog);
 }
@@ -142,6 +150,8 @@ void eval(char* cmdline)
 /* eval_node - Evaluate a node */
 void eval_node(struct node* node)
 {
+    int status;
+    pid_t pid_left, pid_right;
     switch (node->type) {
     case NODE_TYPE_EMPTY:
         /* Do nothing */
@@ -156,27 +166,64 @@ void eval_node(struct node* node)
         if (builtin_command(node->data.command.argv))
             return;
 
-        /* Otherwise, fork a child process and run the command */
-        pid_t pid;
-        if ((pid = fork()) == 0) {
-            /* This is inside the child process */
-            if (execvp(node->data.command.argv[0], node->data.command.argv) < 0) {
-                printf("%s: Command not found.\n", node->data.command.argv[0]);
-                exit(0);
-            }
+        /* Otherwise, run the command */
+        execvp(node->data.command.argv[0], node->data.command.argv);
 
-            /* This code path should never be reached */
-        }
-
-        /* Wait for the child process to terminate */
-        int status;
-        if (waitpid(pid, &status, 0) < 0)
-            unix_error("eval_node: waitpid error");
+        printf("%s: Command not found.\n", node->data.command.argv[0]);
         break;
 
     case NODE_TYPE_PIPE:
-        /* TBD */
+        /* Create a pipe and run the child nodes */
         debug("eval_node: Pipe node.\n");
+
+        /* Create a pipe */
+        int pipefd[2];
+        if (pipe(pipefd) < 0)
+            unix_error("eval_node: pipe error");
+
+        debug("eval_node: Read end: %d.\n", pipefd[0]);
+        debug("eval_node: Write end: %d.\n", pipefd[1]);
+
+        /* Fork the "left" process */
+        if ((pid_left = fork()) == 0) {
+            /* This is inside the child process */
+            /* We don't need the read end at all */
+            close(pipefd[0]);
+
+            /* Replace stdout with the write end of the pipe */
+            dup2(pipefd[1], STDOUT_FILENO);
+
+            /* Now the write end is no longer needed */
+            close(pipefd[1]);
+
+            /* Run the command node */
+            eval_node(node->data.pipe.left);
+        }
+
+        /* Fork the "right" process */
+        if ((pid_right = fork()) == 0) {
+            /* This is inside the child process */
+            /* We don't need the write end at all */
+            close(pipefd[1]);
+
+            /* Replace stdin with the read end of the pipe */
+            dup2(pipefd[0], STDIN_FILENO);
+
+            /* Now the read end is no longer needed */
+            close(pipefd[0]);
+
+            /* Run the rest node */
+            eval_node(node->data.pipe.right);
+        }
+
+        /* Close the pipe */
+        close(pipefd[0]);
+        close(pipefd[1]);
+
+        /* Wait for the child processes to terminate */
+        waitpid(pid_left, &status, 0);
+        waitpid(pid_right, &status, 0);
+
         break;
 
     default:
@@ -185,6 +232,7 @@ void eval_node(struct node* node)
         break;
     }
 
+    exit(0);
 }
 
 /* If first arg is a builtin command, run it and return true */
@@ -218,6 +266,13 @@ int builtin_quit(char* _[])
 {
     debug("builtin_quit: Quitting.\n");
 
+    /* Get the parent PID */
+    pid_t parent_pid = getppid();
+
+    /* Kill the parent with SIGKILL */
+    kill(parent_pid, SIGTERM);
+
+    /* Self destruct */
     exit(0);
 
     /* This function never returns */
@@ -617,6 +672,13 @@ void handle_sigchld(int _)
     while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
         debug("handle_sigchld: Child process %d terminated.\n", pid);
     }
+}
+
+/* handle_sigterm - SIGTERM signal handler */
+void handle_sigterm(int _)
+{
+    /* Graceful quit request received, so quit */
+    exit(0);
 }
 /* $end handlers */
 
