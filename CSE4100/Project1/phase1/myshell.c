@@ -7,7 +7,7 @@
 
 /* Constant definitions *******************************************************/
 #define MAXARGS 128
-#define HISTFILE ".myshell_history"
+#define HISTFILE ".myshell_p1_history"
 #define HISTFILESIZE 128
 
 #define PARSE_RESULT_OK 0

@@ -8,7 +8,7 @@
 /* Constant definitions *******************************************************/
 #define MAXARGS 128
 #define MAXJOBS 16
-#define HISTFILE ".myshell_history"
+#define HISTFILE ".myshell_p3_history"
 #define HISTFILESIZE 128
 
 #define PARSE_RESULT_OK 0
@@ -192,7 +192,6 @@ void eval(char* cmdline)
 
     /* If not background, wait for it to finish */
     if (!background) {
-        int status;
         pause();
     } else {
         printf("[%d] (%d) %s", jid, pid, cmdline);
