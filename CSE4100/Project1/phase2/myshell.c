@@ -14,14 +14,12 @@
 #define PARSE_ERROR_UNMATCHED_QUOTE -1
 #define PARSE_ERROR_EXPECTED_EOL -2
 
-
 /* Utility macro definitions **************************************************/
 #ifdef DEBUG
 #define debug(...) printf(__VA_ARGS__)
 #else
 #define debug(...)
 #endif
-
 
 /* Data structures ************************************************************/
 struct node {
@@ -42,7 +40,6 @@ struct node {
         } pipe;
     } data;
 };
-
 
 /* Function prototypes ********************************************************/
 
@@ -73,17 +70,14 @@ void history_last(char* buf);
 bool is_whitespace(char c);
 bool is_quotation(char c);
 
-
 /* Signal handlers ************************************************************/
 void handle_sigchld(int sig);
 void handle_sigterm(int sig);
-
 
 /* Global variables ***********************************************************/
 bool exit_flag = false;
 bool history_enabled = true;
 bool history_replaced = false;
-
 
 /* Function implementations ***************************************************/
 
@@ -100,7 +94,7 @@ int main(void)
 
     /* Initialize history */
     history_init();
-    
+
     /* REPL */
     while (1) {
         /* Read */
@@ -119,10 +113,10 @@ int main(void)
 /* eval - Evaluate a command line */
 void eval(char* cmdline)
 {
-    char* argv[MAXARGS];   /* Argument list execve() */
-    char buf[MAXLINE];     /* Holds modified command line */
-    int parse_result;      /* Result of parse() */
-    pid_t pid;             /* Process id */
+    char* argv[MAXARGS]; /* Argument list execve() */
+    char buf[MAXLINE];   /* Holds modified command line */
+    int parse_result;    /* Result of parse() */
+    pid_t pid;           /* Process id */
 
     strcpy(buf, cmdline);
     debug("eval: Content of buf: %s", buf);
@@ -282,10 +276,7 @@ int builtin_quit(char* _[])
 /* Built-in `cd` command handler */
 int builtin_cd(char* argv[])
 {
-    debug(
-        "builtin_cd: Changing directory to \"%s\"...\n",
-        argv[1] != NULL ? argv[1] : "~"
-    );
+    debug("builtin_cd: Changing directory to \"%s\"...\n", argv[1] != NULL ? argv[1] : "~");
 
     /* If no argument is given, go to home directory */
     if (argv[1] == NULL)
@@ -380,7 +371,6 @@ int parse(char* buf, struct node** prog)
            and setup a new command target to parse
            9. If the current character is EOL, wrap up. */
 
-        
         if (*buf == '\0') {
             /* EOL */
             debug("parse: End of line.\n");
@@ -527,8 +517,7 @@ int parse(char* buf, struct node** prog)
             }
         } else if (is_quotation(*buf) && quote == '\0') {
             /* 1. quotation and quote is NUL */
-            debug("parse: Beginning of a quoted string starting with '%c'.\n",
-                  *buf);
+            debug("parse: Beginning of a quoted string starting with '%c'.\n", *buf);
             quote = *buf++;
             word = buf;
         } else if (is_quotation(*buf) && *buf == quote) {
@@ -563,7 +552,7 @@ int parse(char* buf, struct node** prog)
             /* This code path should never be reached */
             printf("parse: Unknown case: %c %c %c\n", *buf, *word, quote);
         }
-        
+
         /* Increment buffer pointer */
         buf++;
     }
@@ -604,12 +593,10 @@ void node_debug(struct node* node)
 {
     if (node->type == NODE_TYPE_COMMAND) {
         debug(
-              "node_debug: %s command node: %s\n",
-              node->data.command.background
-              ? "Background"
-              : "Foreground",
-              node->data.command.argv[0]
-              );
+            "node_debug: %s command node: %s\n",
+            node->data.command.background ? "Background" : "Foreground",
+            node->data.command.argv[0]
+        );
         debug("node_debug: It has %d arguments: ", node->data.command.argc);
         for (int i = 0; i < node->data.command.argc; i++) {
             debug("%s ", node->data.command.argv[i]);
@@ -651,16 +638,10 @@ void node_string(struct node* node, char* buf)
 }
 
 /* is_whatespace - Check if the character is a whitespace character */
-bool is_whitespace(char c)
-{
-    return c == ' ' || c == '\t';
-}
+bool is_whitespace(char c) { return c == ' ' || c == '\t'; }
 
 /* is_quotation - Check if the character is a quotation character */
-bool is_quotation(char c)
-{
-    return c == '\'' || c == '"' || c == '`';
-}
+bool is_quotation(char c) { return c == '\'' || c == '"' || c == '`'; }
 /* $end parse */
 
 /* $begin handlers */
@@ -722,7 +703,7 @@ void history_add(struct node* node)
     debug("history_add: Opening history file...\n");
     char histfile_path[MAXLINE];
     sprintf(histfile_path, "%s/%s", getenv("HOME"), HISTFILE);
-    
+
     FILE* fp = fopen(histfile_path, "a");
     if (fp == NULL) {
         unix_error("history_add: Failed to open history file");
@@ -746,7 +727,7 @@ void history_add(struct node* node)
     debug("history_add: Writing command to history file...\n");
     fprintf(fp, "%s\n", buf);
 
- cleanup:
+cleanup:
     /* Close the file */
     fclose(fp);
 }
@@ -758,7 +739,7 @@ void history_at(int index, char* buf)
     debug("history_at: Opening history file...\n");
     char histfile_path[MAXLINE];
     sprintf(histfile_path, "%s/%s", getenv("HOME"), HISTFILE);
-    
+
     FILE* fp = fopen(histfile_path, "r");
     if (fp == NULL) {
         unix_error("history_at: Failed to open history file");
@@ -781,7 +762,7 @@ void history_last(char* buf)
     debug("history_last: Opening history file...\n");
     char histfile_path[MAXLINE];
     sprintf(histfile_path, "%s/%s", getenv("HOME"), HISTFILE);
-    
+
     FILE* fp = fopen(histfile_path, "r");
     if (fp == NULL) {
         unix_error("history_last: Failed to open history file");
