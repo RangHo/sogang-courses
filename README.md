@@ -4,9 +4,26 @@
 
 혹시 틀리거나 만점을 받지 못 할 만한 답안이 있다면 부담없이 [이슈](https://github.com/RangHo/sogang-courses/issues/new/choose) 또는 [풀 리퀘스트](https://github.com/RangHo/sogang-courses/compare)를 작성해 주세요. 강의자료 및 과제/족보 기부는 언제든지 환영입니다! 기부는 풀 리퀘스트를 작성하거나 제 이메일 [hello@rangho.me](mailto:hello@rangho.me)로 보내 주시면 검토 및 작업 후 추가하도록 할게요.
 
+## 📢 자료실 게시판 오픈!
+
+GitHub Discussion을 이용해서 [자료실 게시판](https://github.com/RangHo/sogang-courses/discussions)을 열었습니다! 모르는 부분에 대한 질문이나 학교생활 꿀팁을 공유하면서 집단지성을 완성해 보아요!
+
+| 게시판 | 설명 |
+|:------ |:---- |
+| [자유게시판](https://github.com/RangHo/sogang-courses/discussions/categories/%EC%9E%90%EC%9C%A0%EA%B2%8C%EC%8B%9C%ED%8C%90) | 세상 사는 이야기를 나눠요. |
+| [질문게시판](https://github.com/RangHo/sogang-courses/discussions/categories/%EC%A7%88%EB%AC%B8%EA%B2%8C%EC%8B%9C%ED%8C%90) | 어떤 종류의 질문도 환영이에요. |
+| [꿀팁게시판](https://github.com/RangHo/sogang-courses/discussions/categories/%EA%BF%80%ED%8C%81%EA%B2%8C%EC%8B%9C%ED%8C%90) | 알아두면 쓸모있는 서강대 잡학사전. |
+| [투표게시판](https://github.com/RangHo/sogang-courses/discussions/categories/%ED%88%AC%ED%91%9C%EA%B2%8C%EC%8B%9C%ED%8C%90) | VS놀이부터 설문조사까지. |
+
+#### 유용한 자료 링크
+
+1. [서강대 근처 맛집 리스트](https://github.com/RangHo/sogang-courses/discussions/7)
+2. [학생 신분으로 받을 수 있는 혜택](https://github.com/RangHo/sogang-courses/discussions/13)
+
 ## ✨ 완성된 과목 목록
+
 | 과목코드 | 과목명 | 학기 | 내용 |
-|----------|--------|------|------|
+| -------- | ------ | ---- | ---- |
 | `CSE2003` | [기초공학설계](CSE2003) | 2019-01 | 실습, 프로젝트, 보고서 |
 | `LAU4003` | [언어의이해](LAU4003) | 2019-02 | 중간고사, 기말고사 |
 | `CSE3015` | [디지털회로개론](CSE3015) | 2020-02 | 과제 |
@@ -16,10 +33,9 @@
 | `COR1009` | [컴퓨팅사고력(전자과 전용)](COR1009) | 2020-01 | 실습, 프로젝트 |
 | `EEE2108` | [공학프로그래밍](EEE2108) | 2021-02 | 실습, 보고서, 프로젝트 |
 
-
 ## 🏗️ 작업중인 과목 목록
 | 과목코드 | 과목명 | 학기 | 현재까지 작성된 내용 |
-|----------|--------|------|----------------------|
+| -------- | ------ | ---- | -------------------- |
 | `COR1010` | [기초인공지능프로그래밍](COR1010) | 2023-01 | 실습, 과제, TA용 유틸리티 |
 | `CSE4100` | [멀티코어프로그래밍](CSE4100) | 2023-01 | 프로젝트 |
 | `CSE4186` | [캡스톤디자인I](CSE4186) | 2023-01 | 과제 |
