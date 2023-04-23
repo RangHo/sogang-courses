@@ -37,7 +37,7 @@ GitHub Discussion을 이용해서 [자료실 게시판](https://github.com/RangH
 | 과목코드 | 과목명 | 학기 | 현재까지 작성된 내용 |
 | -------- | ------ | ---- | -------------------- |
 | `COR1010` | [기초인공지능프로그래밍](https://github.com/RangHo/sogang-courses/tree/cor1010/COR1010) | 2023-01 | 실습, 과제, TA용 유틸리티 |
-| `CSE4100` | [멀티코어프로그래밍](CSE4100) | 2023-01 | 프로젝트 |
+| `CSE4100` | [멀티코어프로그래밍](https://github.com/RangHo/sogang-courses/tree/cse4100/CSE4100) | 2023-01 | 프로젝트 |
 | `CSE4186` | [캡스톤디자인I](CSE4186) | 2023-01 | 과제 |
 
 
