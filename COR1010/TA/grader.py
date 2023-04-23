@@ -392,9 +392,10 @@ if __name__ == '__main__':
             for item in incorrect_results:
                 # Create a diff file for each incorrect student
                 diff_file = Path(args.diff_out) / f"{item['id']}.diff"
-                with open(diff_file, 'w') as f:
+                with open(diff_file, 'a') as f:
                     # Print the diff result to the file
                     log_debug(f"Writing diff file for student {item['id']}...")
                     f.write(item['answer_result'].diff(item['student_result']))
+                    f.write("\n")
     except Exception as e:
         log_error("Failed to write to the diff file:", e)
