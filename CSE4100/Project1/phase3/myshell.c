@@ -165,9 +165,7 @@ void eval(char* cmdline)
     /* Add the command to history*/
     history_add(prog);
 
-#ifdef DEBUG
     node_debug(prog);
-#endif
 
     /* Determine the backgroundness */
     bool background = false;
@@ -207,10 +205,11 @@ void eval_node(struct node* node)
     static char node_command[MAXLINE];
     node_string(node, node_command);
 
+    /* Ignore SIGTSTP */
+    signal(SIGTSTP, SIG_IGN);
+
     int status;
     pid_t pid_left, pid_right;
-    jid_t jid;
-    enum job_state state;
     switch (node->type) {
     case NODE_TYPE_EMPTY:
         /* Do nothing */
@@ -333,6 +332,10 @@ int builtin_command(char* argv[])
     if (!strcmp(argv[0], "bg"))
         return builtin_bg(argv);
 
+    /* `kill` command */
+    if (!strcmp(argv[0], "kill"))
+        return builtin_kill(argv);
+
     /* Ignore singleton `&` */
     if (!strcmp(argv[0], "&"))
         return 1;
@@ -414,15 +417,12 @@ int builtin_jobs(char* _[])
             break;
 
         case JOB_STATE_FOREGROUND:
-            printf("[%d] %s (foreground)\n", job->jid, job->cmdline);
-            break;
-
         case JOB_STATE_BACKGROUND:
-            printf("[%d] %s (background)\n", job->jid, job->cmdline);
+            printf("[%d] (running) %s", job->jid, job->cmdline);
             break;
 
         case JOB_STATE_STOPPED:
-            printf("[%d] %s (stopped)\n", job->jid, job->cmdline);
+            printf("[%d] (suspended) %s", job->jid, job->cmdline);
             break;
 
         default:
@@ -443,7 +443,13 @@ int builtin_fg(char* argv[])
         return 1;
     }
 
-    jid_t jid = atoi(argv[1]);
+    /* Job ID must start with a percent sign */
+    if (argv[1][0] != '%') {
+        printf("fg: Job ID must start with a percent sign.\n");
+        return 1;
+    }
+
+    jid_t jid = atoi(argv[1] + 1);
 
     debug("builtin_fg: Bringing job %d to foreground...\n", jid);
 
@@ -484,7 +490,13 @@ int builtin_bg(char* argv[])
         return 1;
     }
 
-    jid_t jid = atoi(argv[1]);
+    /* Job ID must start with a percent sign */
+    if (argv[1][0] != '%') {
+        printf("bg: Job ID must start with a percent sign.\n");
+        return 1;
+    }
+
+    jid_t jid = atoi(argv[1] + 1);
 
     debug("builtin_bg: Bringing job %d to background...\n", jid);
 
@@ -503,6 +515,44 @@ int builtin_bg(char* argv[])
     /* Bring the job to background */
     kill(job_list[jid - 1].pid, SIGCONT);
     job_list[jid - 1].state = JOB_STATE_BACKGROUND;
+
+    return 1;
+}
+
+/* Built-in `kill` command handler */
+int builtin_kill(char* argv[])
+{
+    if (argv[1] == NULL) {
+        printf("kill: No job ID given.\n");
+        return 1;
+    }
+
+    /* Job ID must start with a percent sign */
+    if (argv[1][0] != '%') {
+        printf("kill: Job ID must start with a percent sign.\n");
+        return 1;
+    }
+
+    jid_t jid = atoi(argv[1]);
+
+    /* Job ID must start with a percent sign */
+
+    debug("builtin_kill: Killing job %d...\n", jid);
+
+    /* Check if the job ID is valid */
+    if (jid < 1 || jid > MAXJOBS) {
+        printf("kill: Invalid job ID: %d\n", jid);
+        return 1;
+    }
+
+    /* Check if the job exists */
+    if (job_list[jid - 1].state == JOB_STATE_INVALID) {
+        printf("kill: Job %d does not exist.\n", jid);
+        return 1;
+    }
+
+    /* Kill the job */
+    kill(job_list[jid - 1].pid, SIGKILL);
 
     return 1;
 }
@@ -1056,6 +1106,9 @@ jid_t job_add(pid_t pid, enum job_state state, char* cmdline)
             return job_list[i].jid;
         }
     }
+
+    debug("job_add: Job list is full\n");
+    return 0;
 }
 
 /* job_delete - Delete a job from the job list */
