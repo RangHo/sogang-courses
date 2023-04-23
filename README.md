@@ -38,7 +38,7 @@ GitHub Discussion을 이용해서 [자료실 게시판](https://github.com/RangH
 | -------- | ------ | ---- | -------------------- |
 | `COR1010` | [기초인공지능프로그래밍](https://github.com/RangHo/sogang-courses/tree/cor1010/COR1010) | 2023-01 | 실습, 과제, TA용 유틸리티 |
 | `CSE4100` | [멀티코어프로그래밍](https://github.com/RangHo/sogang-courses/tree/cse4100/CSE4100) | 2023-01 | 프로젝트 |
-| `CSE4186` | [캡스톤디자인I](CSE4186) | 2023-01 | 과제 |
+| `CSE4186` | [캡스톤디자인I]([CSE4186](https://github.com/RangHo/sogang-courses/tree/cse4186/CSE4186)) | 2023-01 | 과제 |
 
 
 ## 📝 라이센스 및 면책 조항 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
