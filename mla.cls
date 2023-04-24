@@ -42,7 +42,7 @@
 \usepackage{hyperref}
 
 % BibLaTeX bibliography manager
-\usepackage[style=mla]{biblatex}
+\usepackage[backend=biber,style=mla]{biblatex}
 
 
 %% Macro definitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -97,7 +97,7 @@
 \setmainfont{Times New Roman}
 
 % Use double-spaced
-\doublespacing
+\doublespacing{}
 
 % Paragraph indentation must be a half inch
 \setlength\parindent{0.5in}
