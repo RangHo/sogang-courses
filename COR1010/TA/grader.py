@@ -344,7 +344,9 @@ if __name__ == '__main__':
         # Run the student's code for each test cases
         for testcase, answer in zip(testcase_paths, answer_list):
             # Gathering some info before running the code
-            student_id = re.search(args.id_regex, student_code.name).group(0)
+            student_id_match = re.search(args.id_regex, student_code.name)
+            student_id = student_id_match.group(0) \
+                if student_id_match is not None else "N/A"
             student_result = run(student_code, testcase)
 
             results.append({
