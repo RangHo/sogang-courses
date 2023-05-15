@@ -6,13 +6,14 @@ import sys
 import argparse
 import csv
 import difflib
+import json
 import subprocess
 import re
 
 from pathlib import Path
 
 # Type imports
-from typing import Optional, Final
+from typing import Any, Optional, Final
 
 # List of encodings to try before tapping out
 POSSIBLE_ENCODINGS: Final = [
@@ -97,6 +98,9 @@ def log_debug(*args, **kwargs):
     """Log a debugging message."""
     if LOG_LEVEL > 1:
         print(*args, **kwargs)
+
+def serialize(target: Any) -> dict:
+    return vars(target)
 
 
 def try_decode(s: bytes) -> str:
@@ -230,6 +234,12 @@ if __name__ == '__main__':
         nargs='?',
         const='output.csv',
         help='The file name of the CSV file containing the result'
+    )
+    parser.add_argument(
+        '--json-out',
+        nargs='?',
+        const='output.json',
+        help='The file name of the JSON file containing the result'
     )
     parser.add_argument(
         '--diff-out',
@@ -378,6 +388,16 @@ if __name__ == '__main__':
                 )
     except Exception as e:
         log_error("Failed to write to a CSV file:", e)
+
+    # Save it as JSON if the user asked to do so
+    try:
+        if args.json_out is not None:
+            log_info("Writing to a JSON file:", args.json_out)
+
+            with open(args.json_out, 'w', encoding='utf-8') as f:
+                json.dump(results, f, default=serialize)
+    except Exception as e:
+        log_error("Failed to write to a JSON file:", e)
 
     # Save the diff files if the user asked to do so
     try:
