@@ -40,7 +40,7 @@ GitHub Discussion을 이용해서 [자료실 게시판](https://github.com/RangH
 | `CSE4100` | [멀티코어프로그래밍](https://github.com/RangHo/sogang-courses/tree/cse4100/CSE4100) | 2023-01 | 프로젝트 |
 | `CSE4186` | [캡스톤디자인I](https://github.com/RangHo/sogang-courses/tree/cse4186/CSE4186) | 2023-01 | 과제 |
 | `ENG2101` | [영문학작문](https://github.com/RangHo/sogang-courses/tree/eng2101/ENG2101) | 2023-01 | 중간 레포트 |
-
+| `CSE4050` | [프로그래밍언어](https://github.com/RangHo/sogang-courses/tree/cse4050/CSE4050) | 2023-01 | 과제 |
 
 ## 📝 라이센스 및 면책 조항 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
 이 리포지토리에 있는 모든 소스코드 파일은 따로 명시되지 않는 한 `GNU General Public License version 3`에 따라 배포됩니다. GPL 라이센스 전문은 [GPLv3 LICENSE](LICENSE.GPLv3) 파일을 참고해 주세요. 또, 소스코드 이외의 모든 문서 또는 저작물은 따로 명시되지 않는 한 `CC-BY-NC-SA 4.0 International` 라이센스에 따라 배포됩니다. Creative Commons 라이센스 전문은 [CC-BY-NC-SA LICENSE](LICENSE.CC-BY-NC-SA-4.0-International) 파일을 참고해 주세요.
