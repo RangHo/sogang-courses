@@ -10,6 +10,7 @@ import json
 import subprocess
 import re
 
+from dataclasses import dataclass
 from pathlib import Path
 
 # Type imports
@@ -31,31 +32,36 @@ POSSIBLE_ENCODINGS: Final = [
 #  - 2: Debugging info
 LOG_LEVEL: int = 1
 
-class RunResult:
-    """Result of a program."""
 
+@dataclass
+class RunResult:
+    """Result of a single run of a Python program."""
+
+    # Class constants
     IGNORE_WHITESPACE = False
     STRIP_WHITESPACE = False
 
-    def __init__(self, target: str, input: Optional[str], success: bool, output: str):
-        self.target = target
-        self.input = input if input is not None else "N/A"
-        self.success = success
-        self.output = output.splitlines(keepends=True)
+    # Required fields
+    target: str
+    output_str: str
+    is_success: bool
+
+    # Optional fields
+    input_str: Optional[str]
 
     def __eq__(self, other):
         """Compare two results."""
         if isinstance(other, str):
-            return self.output == other.splitlines(keepends=True)
+            return self.output_str == other.splitlines(keepends=True)
 
-        if not self.success or not other.success:
+        if not self.is_success or not other.is_success:
             return False
 
         # Strip whitespace for each line if needed
-        self_output = [line.strip() for line in self.output] \
-            if self.STRIP_WHITESPACE else self.output
-        other_output = [line.strip() for line in other.output] \
-            if other.STRIP_WHITESPACE else other.output
+        self_output = [line.strip() for line in self.output_str] \
+            if self.STRIP_WHITESPACE else self.output_str
+        other_output = [line.strip() for line in other.output_str] \
+            if other.STRIP_WHITESPACE else other.output_str
 
         # Ignore whitespace if needed
         self_output = [line.replace(" ", "") for line in self_output] \
@@ -70,18 +76,34 @@ class RunResult:
         return not self.__eq__(other)
 
     def __str__(self):
-        """Return a string representation of the result."""
-        return "".join(self.output)
+        """Return the output string when stringified."""
+        return self.output_str
 
     def diff(self, other) -> str:
         """Return a diff of the output of two results."""
         result = difflib.unified_diff(
-            self.output,
-            other.output,
+            self.output_str,
+            other.output_str,
             fromfile=self.target,
             tofile=other.target,
         )
         return "".join(result)
+
+
+@dataclass
+class TestResult:
+    """Result of a comparison of a student's code with the answer."""
+
+    # Required fields
+    student_id: str
+    code_file: str
+    is_success: bool
+    is_correct: bool
+    answer_result: RunResult
+    student_result: RunResult
+
+    # Optional fields
+    testcase_file: str = "N/A"
 
 
 def log_error(*args, **kwargs):
@@ -98,6 +120,7 @@ def log_debug(*args, **kwargs):
     """Log a debugging message."""
     if LOG_LEVEL > 1:
         print(*args, **kwargs)
+
 
 def serialize(target: Any) -> dict:
     return vars(target)
@@ -151,17 +174,17 @@ def run(script_path: Path, input_path: Optional[Path] = None) -> RunResult:
             result = run_without_input(script_path)
             return RunResult(
                 target=script_path.name,
-                input=None,
-                success=True,
-                output=result
+                input_str=None,
+                is_success=True,
+                output_str=result
             )
         else:
             result = run_with_input(script_path, input_path)
             return RunResult(
                 target=script_path.name,
-                input=input_path.read_text(),
-                success=True,
-                output=result
+                input_str=input_path.read_text(),
+                is_success=True,
+                output_str=result
             )
 
     except subprocess.CalledProcessError as e:
@@ -173,9 +196,9 @@ def run(script_path: Path, input_path: Optional[Path] = None) -> RunResult:
 
         return RunResult(
             target=script_path.name,
-            input=input_path.read_text() if input_path is not None else None,
-            success=False,
-            output=error_output
+            input_str=input_path.read_text() if input_path is not None else None,
+            is_success=False,
+            output_str=error_output
         )
 
 
@@ -338,7 +361,7 @@ if __name__ == '__main__':
                 answer_list.append(f.read())
 
     # Set up a list to store results
-    results: list[dict] = []
+    results: list[TestResult] = []
 
     # Find all student code
     student_code_paths = Path(args.directory).glob('*.py')
@@ -359,15 +382,15 @@ if __name__ == '__main__':
                 if student_id_match is not None else "N/A"
             student_result = run(student_code, testcase)
 
-            results.append({
-                'id': student_id,
-                'code': student_code.name,
-                'testcase': testcase.name if testcase is not None else None,
-                'success': student_result.success,
-                'correct': answer == student_result,
+            results.append(TestResult(**{
+                'student_id': student_id,
+                'code_file': student_code.name,
+                'testcase_file': testcase.name if testcase is not None else None,
+                'is_success': student_result.is_success,
+                'is_correct': answer == student_result,
                 'answer_result': answer,
                 'student_result': student_result,
-            })
+            }))
 
     # Print the result first
     for item in results:
@@ -381,9 +404,11 @@ if __name__ == '__main__':
             # Add BOM as Excel doesn't like CSV files without metadata
             with open(args.csv_out, 'w', encoding='utf-8-sig') as f:
                 writer = csv.writer(f)
-                writer.writerow(results[0].keys())
+                writer.writerow(
+                    [it for it in vars(results[0])]
+                )
                 writer.writerows(
-                    [str(value).replace('\n', '\\n') for _, value in item.items()]
+                    [getattr(item, attr) for attr in vars(item)]
                     for item in results
                 )
     except Exception as e:
@@ -408,16 +433,16 @@ if __name__ == '__main__':
             Path(args.diff_out).mkdir(parents=True, exist_ok=True)
 
             # Filter out correct students
-            incorrect_results = [item for item in results if not item['correct']]
+            incorrect_results = [item for item in results if not item.is_correct]
 
             # Start processing
             for item in incorrect_results:
                 # Create a diff file for each incorrect student
-                diff_file = Path(args.diff_out) / f"{item['id']}.diff"
+                diff_file = Path(args.diff_out) / f"{item.student_id}.diff"
                 with open(diff_file, 'a') as f:
                     # Print the diff result to the file
-                    log_debug(f"Writing diff file for student {item['id']}...")
-                    f.write(item['answer_result'].diff(item['student_result']))
+                    log_debug(f"Writing diff file for student {item.student_id}...")
+                    f.write(item.answer_result.diff(item.student_result))
                     f.write("\n")
     except Exception as e:
         log_error("Failed to write to the diff file:", e)
