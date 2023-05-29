@@ -46,14 +46,14 @@ typedef struct sockaddr SA;
 typedef struct {
     int rio_fd;                /* Descriptor for this internal buf */
     int rio_cnt;               /* Unread bytes in internal buf */
-    char* rio_bufptr;          /* Next unread byte in internal buf */
+    char *rio_bufptr;          /* Next unread byte in internal buf */
     char rio_buf[RIO_BUFSIZE]; /* Internal buffer */
 } rio_t;
 /* $end rio_t */
 
 /* External variables */
 extern int h_errno;    /* Defined by BIND for DNS errors */
-extern char** environ; /* Defined by libc */
+extern char **environ; /* Defined by libc */
 
 /* Misc constants */
 #define MAXLINE 8192 /* Max text line length */
@@ -61,17 +61,17 @@ extern char** environ; /* Defined by libc */
 #define LISTENQ 1024 /* Second argument to listen() */
 
 /* Our own error-handling functions */
-void unix_error(char* msg);
-void posix_error(int code, char* msg);
-void dns_error(char* msg);
-void gai_error(int code, char* msg);
-void app_error(char* msg);
+void unix_error(char *msg);
+void posix_error(int code, char *msg);
+void dns_error(char *msg);
+void gai_error(int code, char *msg);
+void app_error(char *msg);
 
 /* Process control wrappers */
 pid_t Fork(void);
-void Execve(const char* filename, char* const argv[], char* const envp[]);
-pid_t Wait(int* status);
-pid_t Waitpid(pid_t pid, int* iptr, int options);
+void Execve(const char *filename, char *const argv[], char *const envp[]);
+pid_t Wait(int *status);
+pid_t Waitpid(pid_t pid, int *iptr, int options);
 void Kill(pid_t pid, int signum);
 unsigned int Sleep(unsigned int secs);
 void Pause(void);
@@ -81,14 +81,14 @@ pid_t Getpgrp();
 
 /* Signal wrappers */
 typedef void handler_t(int);
-handler_t* Signal(int signum, handler_t* handler);
-void Sigprocmask(int how, const sigset_t* set, sigset_t* oldset);
-void Sigemptyset(sigset_t* set);
-void Sigfillset(sigset_t* set);
-void Sigaddset(sigset_t* set, int signum);
-void Sigdelset(sigset_t* set, int signum);
-int Sigismember(const sigset_t* set, int signum);
-int Sigsuspend(const sigset_t* set);
+handler_t *Signal(int signum, handler_t *handler);
+void Sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
+void Sigemptyset(sigset_t *set);
+void Sigfillset(sigset_t *set);
+void Sigaddset(sigset_t *set, int signum);
+void Sigdelset(sigset_t *set, int signum);
+int Sigismember(const sigset_t *set, int signum);
+int Sigsuspend(const sigset_t *set);
 
 /* Sio (Signal-safe I/O) routines */
 ssize_t sio_puts(char s[]);
@@ -101,104 +101,104 @@ ssize_t Sio_putl(long v);
 void Sio_error(char s[]);
 
 /* Unix I/O wrappers */
-int Open(const char* pathname, int flags, mode_t mode);
-ssize_t Read(int fd, void* buf, size_t count);
-ssize_t Write(int fd, const void* buf, size_t count);
+int Open(const char *pathname, int flags, mode_t mode);
+ssize_t Read(int fd, void *buf, size_t count);
+ssize_t Write(int fd, const void *buf, size_t count);
 off_t Lseek(int fildes, off_t offset, int whence);
 void Close(int fd);
-int Select(int n, fd_set* readfds, fd_set* writefds, fd_set* exceptfds, struct timeval* timeout);
+int Select(int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
 int Dup2(int fd1, int fd2);
-void Stat(const char* filename, struct stat* buf);
-void Fstat(int fd, struct stat* buf);
+void Stat(const char *filename, struct stat *buf);
+void Fstat(int fd, struct stat *buf);
 
 /* Directory wrappers */
-DIR* Opendir(const char* name);
-struct dirent* Readdir(DIR* dirp);
-int Closedir(DIR* dirp);
+DIR *Opendir(const char *name);
+struct dirent *Readdir(DIR *dirp);
+int Closedir(DIR *dirp);
 
 /* Memory mapping wrappers */
-void* Mmap(void* addr, size_t len, int prot, int flags, int fd, off_t offset);
-void Munmap(void* start, size_t length);
+void *Mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset);
+void Munmap(void *start, size_t length);
 
 /* Standard I/O wrappers */
-void Fclose(FILE* fp);
-FILE* Fdopen(int fd, const char* type);
-char* Fgets(char* ptr, int n, FILE* stream);
-FILE* Fopen(const char* filename, const char* mode);
-void Fputs(const char* ptr, FILE* stream);
-size_t Fread(void* ptr, size_t size, size_t nmemb, FILE* stream);
-void Fwrite(const void* ptr, size_t size, size_t nmemb, FILE* stream);
+void Fclose(FILE *fp);
+FILE *Fdopen(int fd, const char *type);
+char *Fgets(char *ptr, int n, FILE *stream);
+FILE *Fopen(const char *filename, const char *mode);
+void Fputs(const char *ptr, FILE *stream);
+size_t Fread(void *ptr, size_t size, size_t nmemb, FILE *stream);
+void Fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream);
 
 /* Dynamic storage allocation wrappers */
-void* Malloc(size_t size);
-void* Realloc(void* ptr, size_t size);
-void* Calloc(size_t nmemb, size_t size);
-void Free(void* ptr);
+void *Malloc(size_t size);
+void *Realloc(void *ptr, size_t size);
+void *Calloc(size_t nmemb, size_t size);
+void Free(void *ptr);
 
 /* Sockets interface wrappers */
 int Socket(int domain, int type, int protocol);
-void Setsockopt(int s, int level, int optname, const void* optval, int optlen);
-void Bind(int sockfd, struct sockaddr* my_addr, int addrlen);
+void Setsockopt(int s, int level, int optname, const void *optval, int optlen);
+void Bind(int sockfd, struct sockaddr *my_addr, int addrlen);
 void Listen(int s, int backlog);
-int Accept(int s, struct sockaddr* addr, socklen_t* addrlen);
-void Connect(int sockfd, struct sockaddr* serv_addr, int addrlen);
+int Accept(int s, struct sockaddr *addr, socklen_t *addrlen);
+void Connect(int sockfd, struct sockaddr *serv_addr, int addrlen);
 
 /* Protocol independent wrappers */
 void Getaddrinfo(
-    const char* node, const char* service, const struct addrinfo* hints, struct addrinfo** res
+    const char *node, const char *service, const struct addrinfo *hints, struct addrinfo **res
 );
 void Getnameinfo(
-    const struct sockaddr* sa,
+    const struct sockaddr *sa,
     socklen_t salen,
-    char* host,
+    char *host,
     size_t hostlen,
-    char* serv,
+    char *serv,
     size_t servlen,
     int flags
 );
-void Freeaddrinfo(struct addrinfo* res);
-void Inet_ntop(int af, const void* src, char* dst, socklen_t size);
-void Inet_pton(int af, const char* src, void* dst);
+void Freeaddrinfo(struct addrinfo *res);
+void Inet_ntop(int af, const void *src, char *dst, socklen_t size);
+void Inet_pton(int af, const char *src, void *dst);
 
 /* DNS wrappers */
-struct hostent* Gethostbyname(const char* name);
-struct hostent* Gethostbyaddr(const char* addr, int len, int type);
+struct hostent *Gethostbyname(const char *name);
+struct hostent *Gethostbyaddr(const char *addr, int len, int type);
 
 /* Pthreads thread control wrappers */
-void Pthread_create(pthread_t* tidp, pthread_attr_t* attrp, void* (*routine)(void*), void* argp);
-void Pthread_join(pthread_t tid, void** thread_return);
+void Pthread_create(pthread_t *tidp, pthread_attr_t *attrp, void *(*routine)(void *), void *argp);
+void Pthread_join(pthread_t tid, void **thread_return);
 void Pthread_cancel(pthread_t tid);
 void Pthread_detach(pthread_t tid);
-void Pthread_exit(void* retval);
+void Pthread_exit(void *retval);
 pthread_t Pthread_self(void);
-void Pthread_once(pthread_once_t* once_control, void (*init_function)());
+void Pthread_once(pthread_once_t *once_control, void (*init_function)());
 
 /* POSIX semaphore wrappers */
-void Sem_init(sem_t* sem, int pshared, unsigned int value);
-void P(sem_t* sem);
-void V(sem_t* sem);
+void Sem_init(sem_t *sem, int pshared, unsigned int value);
+void P(sem_t *sem);
+void V(sem_t *sem);
 
 /* Rio (Robust I/O) package */
-ssize_t rio_readn(int fd, void* usrbuf, size_t n);
-ssize_t rio_writen(int fd, void* usrbuf, size_t n);
-void rio_readinitb(rio_t* rp, int fd);
-ssize_t rio_readnb(rio_t* rp, void* usrbuf, size_t n);
-ssize_t rio_readlineb(rio_t* rp, void* usrbuf, size_t maxlen);
+ssize_t rio_readn(int fd, void *usrbuf, size_t n);
+ssize_t rio_writen(int fd, void *usrbuf, size_t n);
+void rio_readinitb(rio_t *rp, int fd);
+ssize_t rio_readnb(rio_t *rp, void *usrbuf, size_t n);
+ssize_t rio_readlineb(rio_t *rp, void *usrbuf, size_t maxlen);
 
 /* Wrappers for Rio package */
-ssize_t Rio_readn(int fd, void* usrbuf, size_t n);
-void Rio_writen(int fd, void* usrbuf, size_t n);
-void Rio_readinitb(rio_t* rp, int fd);
-ssize_t Rio_readnb(rio_t* rp, void* usrbuf, size_t n);
-ssize_t Rio_readlineb(rio_t* rp, void* usrbuf, size_t maxlen);
+ssize_t Rio_readn(int fd, void *usrbuf, size_t n);
+void Rio_writen(int fd, void *usrbuf, size_t n);
+void Rio_readinitb(rio_t *rp, int fd);
+ssize_t Rio_readnb(rio_t *rp, void *usrbuf, size_t n);
+ssize_t Rio_readlineb(rio_t *rp, void *usrbuf, size_t maxlen);
 
 /* Reentrant protocol-independent client/server helpers */
-int open_clientfd(char* hostname, char* port);
-int open_listenfd(char* port);
+int open_clientfd(char *hostname, char *port);
+int open_listenfd(char *port);
 
 /* Wrappers for reentrant protocol-independent client/server helpers */
-int Open_clientfd(char* hostname, char* port);
-int Open_listenfd(char* port);
+int Open_clientfd(char *hostname, char *port);
+int Open_listenfd(char *port);
 
 #endif /* __CSAPP_H__ */
 /* $end csapp.h */

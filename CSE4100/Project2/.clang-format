@@ -10,3 +10,4 @@ ReflowComments: true
 SortIncludes: true
 SortUsingDeclarations: true
 UseTab: Never
+PointerAlignment: Right

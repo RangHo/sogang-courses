@@ -6,7 +6,7 @@
 #define STOCK_NUM 10
 #define BUY_SELL_MAX 10
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     pid_t pids[MAX_CLIENT];
     int runprocess = 0, status, i;
