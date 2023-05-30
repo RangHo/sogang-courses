@@ -236,6 +236,20 @@ int main(int argc, char *argv[])
 
         /* Check all clients for data */
         pool_check_clients(&pool);
+
+        /* If no clients are connected, save the stock database */
+        bool is_connected = false;
+        for (int i = 0; i <= pool.maxi; i++) {
+            if (pool.clients[i].fd > 0) {
+                is_connected = true;
+                break;
+            }
+        }
+
+        if (!is_connected) {
+            debug("no clients connected, saving stock database...\n");
+            stock_save(stock_db, "stock.txt");
+        }
     }
 
     return 0;

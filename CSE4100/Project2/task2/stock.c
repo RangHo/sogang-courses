@@ -162,6 +162,8 @@ void stock_print(struct stock_item *root)
 
 struct stock_item *stock_init(const char *filename)
 {
+    debug("initializing stock from %s\n", filename);
+
     /* Open the file */
     FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
@@ -193,6 +195,8 @@ struct stock_item *stock_init(const char *filename)
 
 bool stock_save(struct stock_item *root, const char *filename)
 {
+    debug("saving stock to %s\n", filename);
+
     /* Open the file */
     FILE *fp = fopen(filename, "w");
     if (fp == NULL) {
