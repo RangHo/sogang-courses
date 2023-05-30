@@ -5,6 +5,7 @@
 
 #include "csapp.h"
 #include "stock.h"
+#include "debug.h"
 
 struct client_pool {
     int maxfd;             /**< Maximum file descriptor. */
@@ -18,9 +19,7 @@ struct client_pool {
     } clients[FD_SETSIZE]; /**< Array of clients. */
 };
 
-/**
- * \brief Stock database.
- */
+struct client_pool pool;
 struct stock_item *stock_db;
 
 void echo(int connfd);
@@ -41,16 +40,24 @@ void pool_init(struct client_pool *p, int listenfd)
 
     FD_ZERO(&p->read_set);
     FD_ZERO(&p->ready_set);
+
+    FD_SET(listenfd, &p->read_set);
 }
 
 void pool_add_client(struct client_pool *p, int connfd)
 {
+    debug("adding new client with file descriptor %d...\n", connfd);
+
     /* Decrease the amount of ready descriptors */
     p->nready--;
 
     /* Find the empty slot and add the descriptor */
     for (int i = 0; i < FD_SETSIZE; i++) {
+        debug("checking if slot %d is empty...\n", i);
+
         if (p->clients[i].fd < 0) {
+            debug("found empty slot at %d\n", i);
+
             /* Add connected descriptor to the pool */
             p->clients[i].fd = connfd;
             Rio_readinitb(&p->clients[i].rio, connfd);
@@ -73,45 +80,37 @@ void pool_check_clients(struct client_pool *p)
     char buf[MAXLINE] = { '\0' };
 
     /* Loop through all clients while there is some ready descriptors */
-    for (int i = 0; p->nready > 0 && i < p->maxi; i++) {
+    for (int i = 0; p->nready > 0 && i <= p->maxi; i++) {
         int connfd = p->clients[i].fd;
         rio_t *rio = &p->clients[i].rio;
 
         /* If the descriptor is ready, process the request */
         if (connfd > 0 && FD_ISSET(connfd, &p->ready_set)) {
+            debug("connection descriptor %d is ready\n", connfd);
+
             p->nready--;
 
             /* Read the data */
             int n = Rio_readlineb(rio, buf, MAXLINE);
+            debug("server read %d bytes\n", n);
 
             /* If the client closed the connection, remove it from the pool */
-            if (n <= 0) {
-                Close(connfd);
-                FD_CLR(connfd, &p->read_set);
-                p->clients[i].fd = -1;
-                continue;
-            }
-
-            /* Process the request */
-            process_request(stock_db, buf);
-
-            /* Check if the client wants to close the connection */
-            if (!strcmp(buf, "exit\n")) {
-                Close(connfd);
-                FD_CLR(connfd, &p->read_set);
-                p->clients[i].fd = -1;
-            }
+            if (n <= 0)
+                goto close_client;
 
             /* Check if the client wants to close the connection */
             if (!strcmp(buf, "exit\n"))
                 goto close_client;
 
+            /* Process the request */
+            process_request(stock_db, buf);
+
             /* Write the data back to the client */
             Rio_writen(connfd, buf, strlen(buf));
-
-            /* Proceed to the next client */
-            continue;
         }
+
+        /* Proceed to the next client */
+        continue;
 
     close_client:
         Close(connfd);
@@ -122,14 +121,25 @@ void pool_check_clients(struct client_pool *p)
 
 void process_request(struct stock_item *tree, char *buffer)
 {
+    debug("processing request: %s...\n", buffer);
+
     /* Compare the input to the commands
        Note: This operation is safe, as the input is guaranteed to be
        well-formed as per the project specification. */
-    if (!strncmp(buffer, "show\n", 5)) {
+    if (!strncmp(buffer, "show", 4)) {
         /* Show the stock information */
+        buffer[0] = '\0';
 
         /* Dump the stock info to the buffer */
         stock_dump(tree, buffer);
+
+        /* Replace newlines with spaces */
+        for (int i = 0; buffer[i] != '\0'; i++)
+            if (buffer[i] == '\n')
+                buffer[i] = ' ';
+
+        /* Replace last space with a newline at the end of the buffer */
+        buffer[strlen(buffer) - 1] = '\n';
     } else if (!strncmp(buffer, "buy ", 4)) {
         /* Buy a stock */
 
@@ -157,7 +167,8 @@ void process_request(struct stock_item *tree, char *buffer)
     } else if (!strncmp(buffer, "exit\n", 5)) {
         /* Exit from the market */
         
-        /* Do nothing */
+        buffer[0] = '\0';
+        return;
     } else {
         /* Invalid command */
 
@@ -179,26 +190,30 @@ int main(int argc, char *argv[])
     }
 
     /* Initialize the stock database */
+    debug("initializing stock database...\n");
     stock_db = stock_init("stock.txt");
-
+    stock_print(stock_db);
+    
     /* Open listening file descriptor using the given port */
+    debug("opening listening file descriptor...\n");
     listenfd = Open_listenfd(argv[1]);
 
     /* Initialize the client pool */
-    struct client_pool pool;
+    debug("initializing client pool...\n");
     pool_init(&pool, listenfd);
 
     /* Main server loop */
     while (1) {
-        printf("Waiting for a connection...\n");
         /* Update the ready set */
+        debug("waiting for ready descriptors...\n");
         pool.ready_set = pool.read_set;
         pool.nready = Select(pool.maxfd + 1, &pool.ready_set, NULL, NULL, NULL);
-        printf("Got a connection!\n");
-
+        debug("found %d ready descriptors\n", pool.nready);
+        
         /* If there is a new connection request... */
         if (FD_ISSET(listenfd, &pool.ready_set)) {
-            printf("New connection request\n");
+            debug("new connection request incoming...\n");
+
             /* ...accept the request... */
             clientlen = sizeof(struct sockaddr_storage);
             connfd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
@@ -213,7 +228,7 @@ int main(int argc, char *argv[])
                 MAXLINE,
                 0
             );
-            printf("Connected to (%s, %s)\n", client_hostname, client_port);
+            debug("connected to %s:%s\n", client_hostname, client_port);
 
             /* ...and add the new client to the pool */
             pool_add_client(&pool, connfd);
@@ -221,18 +236,6 @@ int main(int argc, char *argv[])
 
         /* Check all clients for data */
         pool_check_clients(&pool);
-
-        /* If no client is connected, save the stock database */
-        bool connection_available = false;
-        for (int i = 0; i < pool.maxi; i++) {
-            if (pool.clients[i].fd > 0) {
-                connection_available = true;
-                break;
-            }
-        }
-
-        if (!connection_available)
-            stock_save(stock_db, "stock.txt");
     }
 
     return 0;
