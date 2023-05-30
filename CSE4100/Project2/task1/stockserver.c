@@ -24,11 +24,21 @@ struct stock_item *stock_db;
 
 void echo(int connfd);
 
+void handle_sigint(int sig);
+
 void pool_init(struct client_pool *p, int listenfd);
 void pool_add_client(struct client_pool *p, int connfd);
 void pool_check_clients(struct client_pool *p);
 
 void process_request(struct stock_item *tree, char *buffer);
+
+void handle_sigint(int sig)
+{
+    debug("caught SIGINT\n");
+    stock_save(stock_db, "stock.txt");
+    stock_free(stock_db);
+    exit(0);
+}
 
 void pool_init(struct client_pool *p, int listenfd)
 {
@@ -182,6 +192,9 @@ int main(int argc, char *argv[])
     socklen_t clientlen;
     struct sockaddr_storage clientaddr;
     char client_hostname[MAXLINE], client_port[MAXLINE];
+
+    /* Trap SIGINT */
+    Signal(SIGINT, handle_sigint);
 
     /* Basic command line argument sanity check */
     if (argc != 2) {

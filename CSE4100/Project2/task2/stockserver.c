@@ -15,8 +15,18 @@ size_t thread_size;
 
 void echo(int connfd);
 
+void handle_sigint(int sig);
+
 void *process_thread(void *vargp);
 void process_request(struct stock_item *tree, char *buffer);
+
+void handle_sigint(int sig)
+{
+    debug("caught SIGINT\n");
+    stock_save(stock_db, "stock.txt");
+    stock_free(stock_db);
+    exit(0);
+}
 
 void *process_thread(void *vargp)
 {
@@ -133,6 +143,9 @@ int main(int argc, char *argv[])
     struct sockaddr_storage clientaddr;
     char client_hostname[MAXLINE], client_port[MAXLINE];
     pthread_t tid;
+
+    /* Trap SIGINT */
+    Signal(SIGINT, handle_sigint);
 
     /* Basic command line argument sanity check */
     if (argc != 2) {

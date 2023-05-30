@@ -27,6 +27,8 @@ struct stock_item *stock_alloc(int id, int price, int available)
     item->id = id;
     item->price = price;
     item->available = available;
+    item->left = NULL;
+    item->right = NULL;
 
     Sem_init(&item->padlock, 0, 1);
 
@@ -35,12 +37,12 @@ struct stock_item *stock_alloc(int id, int price, int available)
 
 void stock_free(struct stock_item *item)
 {
-    debug("freeing a stock item %d\n", item->id);
-
     /* Check if the item actualy exists
        If not, silently continue */
     if (item == NULL)
         return;
+
+    debug("freeing a stock item %d\n", item->id);
 
     /* Free the child nodes first */
     stock_free(item->left);
