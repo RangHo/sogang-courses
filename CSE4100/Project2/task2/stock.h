@@ -8,6 +8,8 @@
 
 #include <stdbool.h>
 
+#include "csapp.h"
+
 /**
  * \brief Stock data structure.
  */
@@ -15,6 +17,7 @@ struct stock_item {
     int id;                   /**< Unique identifier of the stock. */
     int price;                /**< Price of the stock. */
     int available;            /**< Number of stock available. */
+    sem_t padlock;            /**< Semaphore to protect the stock. */
     struct stock_item *left;  /**< Pointer to the left child. */
     struct stock_item *right; /**< Pointer to the right child. */
 };

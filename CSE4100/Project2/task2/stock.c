@@ -28,6 +28,8 @@ struct stock_item *stock_alloc(int id, int price, int available)
     item->price = price;
     item->available = available;
 
+    Sem_init(&item->padlock, 0, 1);
+
     return item;
 }
 
@@ -118,7 +120,9 @@ bool stock_buy(struct stock_item *root, int id, int amount)
     if (target->available < amount)
         return false;
 
+    P(&target->padlock);
     target->available -= amount;
+    V(&target->padlock);
     return true;
 }
 
@@ -131,7 +135,9 @@ bool stock_sell(struct stock_item *root, int id, int amount)
     if (target == NULL)
         return false;
 
+    P(&target->padlock);
     target->available += amount;
+    V(&target->padlock);
     return true;
 }
 
