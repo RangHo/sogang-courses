@@ -10,6 +10,14 @@ import json
 import subprocess
 import re
 
+# Signal library is only available on UNIX
+if sys.platform != "win32":
+    import signal
+    def timeout_handler(signum, frame):
+        raise TimeoutError("Student's code timed out!")
+
+    signal.signal(signal.SIGALRM, timeout_handler)
+
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -31,6 +39,9 @@ POSSIBLE_ENCODINGS: Final = [
 #  - 1: Informational info
 #  - 2: Debugging info
 LOG_LEVEL: int = 1
+
+# Seconds to wait before calling timeout
+TIMEOUT_SECONDS = 5
 
 
 @dataclass
@@ -167,6 +178,9 @@ def run_with_input(script_path: Path, input_path: Path) -> str:
 def run(script_path: Path, input_path: Optional[Path] = None) -> RunResult:
     """Run a script and return its output."""
 
+    # Set up an alarm
+    signal.alarm(5)
+
     # Of course, their code can set this computer on fire
     try:
         result = None
@@ -200,6 +214,17 @@ def run(script_path: Path, input_path: Optional[Path] = None) -> RunResult:
             is_success=False,
             output_str=error_output
         )
+    except TimeoutError as e:
+        log_info("Student's code took too long to run!")
+
+        return RunResult(
+            target=script_path.name,
+            input_str=input_path.read_text() if input_path is not None else None,
+            is_success=False,
+            output_str="Timeout"
+        )
+    finally:
+        signal.alarm(0)
 
 
 if __name__ == '__main__':
@@ -249,6 +274,11 @@ if __name__ == '__main__':
         '--filter',
         default='.*',
         help='The regex to filter out files that should not be graded'
+    )
+    parser.add_argument(
+        '--exclude',
+        default=None,
+        help='The regex to exclude files that should not be graded'
     )
 
     # Arguments related to the result output
@@ -371,6 +401,10 @@ if __name__ == '__main__':
         lambda path: re.search(args.filter, path.name) is not None,
         student_code_paths
     )
+    student_code_paths = filter(
+        lambda path: re.search(args.exclude, path.name) is None,
+        student_code_paths
+    ) if args.exclude is not None else student_code_paths
 
     # For each student's code run this madness
     for student_code in student_code_paths:
