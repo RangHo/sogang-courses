@@ -95,6 +95,17 @@ python grader.py /path/to/student/codes \
     --filter 'P1_1'
 ```
 
+반대로 `--exclude` 옵션을 이용하면 특정 패턴이 파일명에 포함되어 있는 파일을
+제외하고 채점합니다. 이 옵션은 `--filter` 옵션돠 함께 사용할 수 있습니다.
+
+```shell
+python grader.py /path/to/student/codes \
+    --answer-code /path/to/answer/code.py \
+    --testcase /path/to/testcase1.txt /path/to/testcase2.txt ... \
+    --filter 'P1_1'
+    --exclude '20231234'
+```
+
 필터링 패턴은 내부적으로 정규표현식 검색을 거치게 되므로, 정규표현식을 사용해서
 더 상세하게 필터링이 가능합니다. 위 예시에서 소문자 P도 허용하고 언더바(`_`)
 대신 하이픈(`-`)도 허용하려면 아래와 같이 필터링 패턴을 변경하면 됩니다.
@@ -177,7 +188,7 @@ python grader.py /path/to/student/codes \
 어떻게 처리할지 정할 수 있습니다.
 
 `--strip-whitespace` 옵션을 추가하면 정답 판정 시 정답 코드와 학생 코드 결과의
-각 행 양 끝에 있는 공백을 무시하고 채점합니다. 즉, `  output`과 `output  `이
+각 행 양 끝에 있는 공백을 무시하고 채점합니다. 즉, `␣␣output`과 `output␣␣`이
 같다고 판정하게 됩니다.
 
 `--ignore-whitespace` 옵션은 공백 문자를 전부 무시합니다. 여기서 공백 문자는

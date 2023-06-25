@@ -124,13 +124,13 @@ def log_error(*args, **kwargs):
 def log_info(*args, **kwargs):
     """Log an informational message."""
     if LOG_LEVEL > 0:
-        print(*args, **kwargs)
+        print("[INFO]", *args, **kwargs)
 
 
 def log_debug(*args, **kwargs):
     """Log a debugging message."""
     if LOG_LEVEL > 1:
-        print(*args, **kwargs)
+        print("[DEBUG]", *args, **kwargs)
 
 
 def serialize(target: Any) -> dict:
@@ -206,7 +206,7 @@ def run(script_path: Path, input_path: Optional[Path] = None) -> RunResult:
         error_output = try_decode(e.output)
 
         log_info("Student's code failed to run!")
-        log_info("Output:", error_output)
+        log_info(f"Output:\n{error_output}")
 
         return RunResult(
             target=script_path.name,
