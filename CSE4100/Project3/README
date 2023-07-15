@@ -1,0 +1,136 @@
+#####################################################################
+# CS:APP Malloc Lab
+# Handout files for students
+#
+# Copyright (c) 2002, R. Bryant and D. O'Hallaron, All rights reserved.
+# May not be used, modified, or copied without permission.
+#
+######################################################################
+
+***********
+Main Files:
+***********
+
+mm.{c,h}	
+	Your solution malloc package. mm.c is the file that you
+	will be handing in, and is the only file you should modify.
+
+mdriver.c	
+	The malloc driver that tests your mm.c file
+
+short{1,2}-bal.rep
+	Two tiny tracefiles to help you get started. 
+
+Makefile	
+	Builds the driver
+
+**********************************
+Other support files for the driver
+**********************************
+
+config.h	Configures the malloc lab driver
+fsecs.{c,h}	Wrapper function for the different timer packages
+clock.{c,h}	Routines for accessing the Pentium and Alpha cycle counters
+fcyc.{c,h}	Timer functions based on cycle counters
+ftimer.{c,h}	Timer functions based on interval timers and gettimeofday()
+memlib.{c,h}	Models the heap and sbrk function
+
+*******************************
+Building and running the driver
+*******************************
+To build the driver, type "make" to the shell.
+
+To run the driver on a tiny test trace:
+
+	unix> mdriver -V -f short1-bal.rep
+
+The -V option prints out helpful tracing and summary information.
+
+To get a list of the driver flags:
+
+	unix> mdriver -h
+
+********************
+Trace file format
+********************
+
+A trace file is an ASCII file. It begins with a 4-line header:
+
+<sugg_heapsize>   /* suggested heap size (unused) */
+<num_ids>         /* number of request id's */
+<num_ops>         /* number of requests (operations) */
+<weight>          /* weight for this trace (unused) */
+
+The header is followed by num_ops text lines. Each line denotes either
+an allocate [a], reallocate [r], or free [f] request. The <alloc_id>
+is an integer that uniquely identifies an allocate or reallocate
+request.
+
+a <id> <bytes>  /* ptr_<id> = malloc(<bytes>) */
+r <id> <bytes>  /* realloc(ptr_<id>, <bytes>) */ 
+f <id>          /* free(ptr_<id>) */
+
+For example, the following trace file:
+
+<beginning of file>
+20000
+3
+8
+1
+a 0 512
+a 1 128
+r 0 640
+a 2 128
+f 1
+r 0 768
+f 0
+f 2
+<end of file>
+
+is balanced. It has a recommended heap size of 20000 bytes (ignored),
+three distinct request ids (0, 1, and 2), eight different requests
+(one per line), and a weight of 1 (ignored).
+
+************************
+Description of traces
+************************
+
+* short{1,2}-bal.rep
+
+Tiny synthetic tracefiles for debugging
+
+* {amptjp,cccp,cp-decl,expr}-bal.rep
+
+Traces generated from real programs.
+
+* {binary,binary2}-bal.rep
+
+The allocation pattern is to alternatively allocate a small-sized
+chunk of memory and a large-sized chunk. The small-sized chunks
+(either 16 or 64 ) are deliberately set to be power of 2 while the
+large-size chunks (either 112 or 448) are not a power of 2. Defeats
+buddy algorithms. However, a simple-minded algorithm might prevail in
+this scenario because a first-fit scheme will be good enough.
+
+* coalescing-bal.rep
+
+Repeatedly allocate two equal-sized chunks (4095 in size) and release
+them, and then immediately allocate and free a chunk twice as big
+(8190). This tests if the students' algorithm ever really releases
+memory and does coalescing. The size is chosen to give advantage to
+tree-based or segrated fits algorithms where there is no header or
+footer overhead.
+
+* {random,random2}-bal.rep
+	
+Random allocate and free requesets that simply test the correctness
+and robustness of the algorithm.
+
+
+* {realloc,realloc2}-bal.rep
+	
+Reallocate previously allocated blocks interleaved by other allocation
+request. The purpose is to test whether a certain amount of internal
+fragments are allocated or not. Naive realloc implementations that
+always realloc a brand new block will suffer.
+
