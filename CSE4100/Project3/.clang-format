@@ -1,0 +1,13 @@
+---
+BasedOnStyle: WebKit
+AlignAfterOpenBracket: BlockIndent
+AlignTrailingComments: true
+BinPackArguments: false
+BinPackParameters: false
+ColumnLimit: 100
+NamespaceIndentation: None
+ReflowComments: true
+SortIncludes: true
+SortUsingDeclarations: true
+UseTab: Never
+PointerAlignment: Right
