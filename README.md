@@ -49,3 +49,24 @@ GitHub Discussion을 이용해서 [자료실 게시판](https://github.com/RangH
 
 ## ☕ 주인장 후원하기
 이 리포지토리가 도움이 됐다면 리포지토리 주인이 더 ~~밤늦게까지~~ 열심히 작업할 수 있게 커피 한 잔 기부해 주세요! 페이지 오른편에 (모바일은 페이지 하단에) 커피 한 잔 쏴 줄 수 있는 링크가 있답니다♪
+
+## 기여자 목록
+
+아래는 이 리포지토리에 기여해주신 분들의 목록입니다!
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://rangho.me/"><img src="https://avatars.githubusercontent.com/u/10833976?v=4?s=100" width="100px;" alt="RangHo Lee"/><br /><sub><b>RangHo Lee</b></sub></a><br /><a href="#content-RangHo" title="Content">🖋</a> <a href="#maintenance-RangHo" title="Maintenance">🚧</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/charlielee206"><img src="https://avatars.githubusercontent.com/u/34549609?v=4?s=100" width="100px;" alt="찬혁"/><br /><sub><b>찬혁</b></sub></a><br /><a href="#content-charlielee206" title="Content">🖋</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
