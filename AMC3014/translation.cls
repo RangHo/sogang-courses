@@ -113,8 +113,8 @@
 % Use double spaced
 \doublespacing{}
 
-% Paragraph indentation must be a half inch
-\setlength\parindent{0.5in}
+% Paragraph indentation must be a half centimeter
+\setlength\parindent{0.5cm}
 
 % Default date format
 \DTMnewdatestyle{mla}{
