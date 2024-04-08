@@ -11,12 +11,20 @@ import subprocess
 import re
 
 # Signal library is only available on UNIX
-if sys.platform != "win32":
+if sys.platform == 'linux' or sys.platform == 'darwin':
     import signal
     def timeout_handler(signum, frame):
         raise TimeoutError("Student's code timed out!")
 
+    def set_alarm(seconds: int):
+        signal.alarm(seconds)
+
     signal.signal(signal.SIGALRM, timeout_handler)
+else:
+    def set_alarm(seconds: int):
+        log_info("Timeout feature is not supported on this platform.")
+        log_info("Student's code will run indefinitely.")
+
 
 from dataclasses import dataclass
 from pathlib import Path
@@ -179,7 +187,7 @@ def run(script_path: Path, input_path: Optional[Path] = None) -> RunResult:
     """Run a script and return its output."""
 
     # Set up an alarm
-    signal.alarm(5)
+    set_alarm(5)
 
     # Of course, their code can set this computer on fire
     try:
@@ -224,7 +232,7 @@ def run(script_path: Path, input_path: Optional[Path] = None) -> RunResult:
             output_str="Timeout"
         )
     finally:
-        signal.alarm(0)
+        set_alarm(0)
 
 
 if __name__ == '__main__':
