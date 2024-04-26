@@ -69,7 +69,7 @@ Class is created! Value = 8
 `Liger.__mro__`의 결과가 아래와 같을 때, 다음 프로그램의 실행 결과를 적으시오.
 
 ```python
-(__main__.Liger, __main__.Tiger, __main__Lion, __main__.Animal, object)
+(__main__.Liger, __main__.Tiger, __main__.Lion, __main__.Animal, object)
 ```
 
 ```python
