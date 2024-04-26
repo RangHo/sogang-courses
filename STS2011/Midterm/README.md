@@ -259,8 +259,8 @@ for i in my_nums:
 #### 정답
 
 ```
-StopIteration
 -8 || 0 || 8 || 
+StopIteration
 ```
 
 #### 해설
@@ -280,12 +280,12 @@ def char_freq(s):
         if c.isspace():
             continue
         c = c.lower()
-        # ---- begin  ----
+        # ---- begin ----
         if c in D:
             D[c] += 1
         else:
             D[c] = 1
-        # ---- end ----
+        # ----- end -----
         return D
 ```
 
