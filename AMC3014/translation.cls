@@ -111,7 +111,7 @@
 \setmainhangulfont{Noto Serif CJK KR}
 
 % Use double spaced
-\doublespacing{}
+\setstretch{2.05}
 
 % Paragraph indentation must be a half centimeter
 \setlength\parindent{0.5cm}
