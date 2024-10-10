@@ -4,7 +4,7 @@
 
 inline cv::Point2d rotate(const cv::Point2d point, double radian);
 
-inline cv::Rect2d find_bounding_box(const cv::Size2d size, double radian);
+inline cv::Rect find_bounding_box(const cv::Size2d size, double radian);
 
 inline cv::Vec3b interpolate(const cv::Mat img, const cv::Point2d point);
 
@@ -19,7 +19,7 @@ cv::Mat problem_a_rotate_forward(cv::Mat img, double angle)
     // Figure out the bounding box
     double angle_radian = -angle * CV_PI / 180.0;
     cv::Size2d img_size(img.rows, img.cols);
-    cv::Rect2d bounding_box = find_bounding_box(img_size, angle_radian);
+    cv::Rect bounding_box = find_bounding_box(img_size, angle_radian);
 
     // Initialize the output matrix with zeros
     output = cv::Mat::zeros(bounding_box.width, bounding_box.height, img.type());
@@ -53,7 +53,7 @@ cv::Mat problem_b_rotate_backward(cv::Mat img, double angle)
     // Figure out the bounding box
     double angle_radian = -angle * CV_PI / 180.0;
     cv::Size2d img_size(img.rows, img.cols);
-    cv::Rect2d bounding_box = find_bounding_box(img_size, angle_radian);
+    cv::Rect bounding_box = find_bounding_box(img_size, angle_radian);
 
     // Initialize the output matrix with zeros
     output = cv::Mat::zeros(bounding_box.width, bounding_box.height, img.type());
@@ -93,7 +93,7 @@ cv::Mat problem_c_rotate_backward_interarea(cv::Mat img, double angle)
     // Figure out the bounding box
     double angle_radian = -angle * CV_PI / 180.0;
     cv::Size2d img_size(img.rows, img.cols);
-    cv::Rect2d bounding_box = find_bounding_box(img_size, angle_radian);
+    cv::Rect bounding_box = find_bounding_box(img_size, angle_radian);
 
     // Initialize the output matrix with zeros
     output = cv::Mat::zeros(bounding_box.width, bounding_box.height, img.type());
@@ -180,7 +180,7 @@ inline cv::Point2d rotate(const cv::Point2d point, double radian)
     return cv::Point(x, y);
 }
 
-inline cv::Rect2d find_bounding_box(const cv::Size2d size, double radian)
+inline cv::Rect find_bounding_box(const cv::Size2d size, double radian)
 {
     // Calculate the size of the rotated image
     std::array<cv::Point2d, 4> points({ cv::Point2d(0.0, 0.0),
@@ -188,10 +188,10 @@ inline cv::Rect2d find_bounding_box(const cv::Size2d size, double radian)
                                         cv::Point2d(size.width, 0.0),
                                         cv::Point2d(size.width, size.height) });
 
-    double min_x = std::numeric_limits<double>::max();
-    double min_y = std::numeric_limits<double>::max();
-    double max_x = std::numeric_limits<double>::min();
-    double max_y = std::numeric_limits<double>::min();
+    int min_x = std::numeric_limits<int>::max();
+    int min_y = std::numeric_limits<int>::max();
+    int max_x = std::numeric_limits<int>::min();
+    int max_y = std::numeric_limits<int>::min();
 
     for (auto point : points) {
         point = rotate(point, radian);
@@ -206,7 +206,7 @@ inline cv::Rect2d find_bounding_box(const cv::Size2d size, double radian)
             max_y = point.y;
     }
 
-    return cv::Rect2d(min_x, min_y, max_x - min_x, max_y - min_y);
+    return cv::Rect(min_x, min_y, max_x - min_x, max_y - min_y);
 }
 
 inline cv::Vec3b interpolate(const cv::Mat img, const cv::Point2d point)
